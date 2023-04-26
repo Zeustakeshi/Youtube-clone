@@ -1,0 +1,31 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+button:hover {
+    opacity: 0.8;
+    transition: all 0.1s linear;
+}
+
+.hiden-scrollbar::-webkit-scrollbar,
+body::-webkit-scrollbar {
+    display: none;
+}
+
+.hiden-scrollbar,
+body {
+    scrollbar-width: none;
+}
+
+.skeleton {
+    animation: skeleton-loading 1s linear infinite alternate;
+}
+
+@keyframes skeleton-loading {
+    0% {
+        background-color: hsl(200, 20%, 80%);
+    }
+    100% {
+        background-color: hsl(200, 20%, 95%);
+    }
+}
