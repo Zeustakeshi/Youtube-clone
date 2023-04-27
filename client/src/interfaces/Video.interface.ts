@@ -1,3 +1,5 @@
+import { AuthorType } from "./User.interface";
+
 export interface IVideo {
     _id: string | number | null;
     title: string;
@@ -10,6 +12,7 @@ export interface IVideo {
     desc: string;
     createdAt: string;
     updatedAt: string;
+    author?: AuthorType;
 }
 
 export interface IVideoState {

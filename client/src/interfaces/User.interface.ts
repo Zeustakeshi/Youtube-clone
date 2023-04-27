@@ -8,6 +8,11 @@ export interface User {
     error?: string | null;
 }
 
+export type AuthorType = Pick<
+    User,
+    "avatar" | "_id" | "username" | "subscribers"
+>;
+
 export interface IUserLoginDataField {
     email: string;
     password: string;

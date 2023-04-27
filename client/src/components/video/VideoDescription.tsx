@@ -1,13 +1,22 @@
+import moment from "moment";
 import React, { useState } from "react";
 
-const VideoDescription = () => {
+interface IVideoDescriptionProps {
+    views: number;
+    updatedAt: string;
+}
+
+const VideoDescription: React.FC<IVideoDescriptionProps> = ({
+    views,
+    updatedAt,
+}) => {
     const [showAll, setShowAll] = useState(false);
     return (
         <div className="my-4 w-full rounded-lg bg-zinc-200 p-4 transition-all">
             <h5 className="flex justify-start items-center gap-1 text-sm font-medium">
-                <span>8.818.204 </span>
+                <span>{views} </span>
                 <span> lượt xem </span>
-                <span>25 thg 7, 2022</span>
+                <span>{moment(updatedAt).format("DD-MM-YYYY")}</span>
             </h5>
             <div
                 className={`text-sm ${

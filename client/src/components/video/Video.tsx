@@ -1,13 +1,19 @@
 import React from "react";
+import { IVideo } from "../../interfaces/Video.interface";
 
-const Video = () => {
+interface IVideoProps {
+    youtubeID: string;
+    title: string;
+}
+
+const Video: React.FC<IVideoProps> = ({ youtubeID, title }) => {
     return (
         <div className="skeleton w-[1280px] h-[720px]">
             <iframe
                 width="1280"
                 height="720"
-                src="https://www.youtube.com/embed/yIaXoop8gl4"
-                title="[作業用BGM] 聴くとポジティブな気持ちになる心地よい音楽 - Morning Mood - Daily Routine"
+                src={`https://www.youtube.com/embed/${youtubeID}`}
+                title={title}
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                 allowFullScreen
             ></iframe>

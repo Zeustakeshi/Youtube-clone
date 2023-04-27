@@ -1,18 +1,16 @@
 import React, { useEffect, useState } from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { IVideo } from "../../interfaces/Video.interface";
 import Avatar from "../avatar/Avatar";
 import moment from "moment";
 import Image from "../image/Image";
-import { User } from "../../interfaces/User.interface";
+import { AuthorType, User } from "../../interfaces/User.interface";
 import axios from "axios";
 import { API_URL } from "../../utils/const";
 
-type AuthorType = Pick<User, "avatar" | "_id" | "username">;
-
 const VideoItem = ({ video }: { video: IVideo }) => {
     const [author, setAuthor] = useState<AuthorType>();
-
+    const navigation = useNavigate();
     useEffect(() => {
         (async () => {
             try {
@@ -29,9 +27,20 @@ const VideoItem = ({ video }: { video: IVideo }) => {
     }, []);
 
     const isLoading = false;
-
     return (
-        <NavLink to={`/video/${video._id}`} className="block w-[335px] my-4 ">
+        <div
+            onClick={() => {
+                navigation(`/video/${video._id}`, {
+                    state: {
+                        video: {
+                            ...video,
+                            author: author,
+                        },
+                    },
+                });
+            }}
+            className="block w-[335px] my-4 "
+        >
             <div className="skeleton w-full h-[190px] rounded-lg">
                 <Image src={video.thumbnailURL}></Image>
             </div>
@@ -67,7 +76,7 @@ const VideoItem = ({ video }: { video: IVideo }) => {
                     </div>
                 </div>
             </div>
-        </NavLink>
+        </div>
     );
 };
 

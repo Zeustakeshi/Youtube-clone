@@ -17,6 +17,7 @@ class UserService {
         const user = await UserModel.findById(userID, {
             username: 1,
             avatar: 1,
+            subscribers: 1,
         });
         if (!user) throw new Error("User not found!");
         return user;
