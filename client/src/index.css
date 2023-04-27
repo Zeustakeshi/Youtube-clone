@@ -29,3 +29,13 @@ body {
         background-color: hsl(200, 20%, 95%);
     }
 }
+
+.content-overflow-limitline {
+    --line: 2;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: var(--line);
+    line-clamp: 2;
+    -webkit-box-orient: vertical;
+}

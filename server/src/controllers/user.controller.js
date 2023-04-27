@@ -22,6 +22,7 @@ export const register = async (req, res) => {
             { _id: newUser._id },
             process.env.ACCESS_TOKEN_SECRET_KEY
         );
+        // res.cookie("access_token", access_token);
         const userForClient = newUser.toObject();
         delete userForClient.password;
         return res.status(200).json({
@@ -47,6 +48,7 @@ export const login = async (req, res) => {
             { _id: user._id },
             process.env.ACCESS_TOKEN_SECRET_KEY
         );
+        // res.cookie("access_token", access_token);
         const userForClient = user.toObject();
         delete userForClient.password;
         return res.status(200).json({
@@ -101,6 +103,17 @@ export const unSubscribe = async (req, res) => {
     try {
         await userService.unSubscribe(userID, channelID);
         return res.json("UnSubscribe is success!");
+    } catch (error) {
+        return res.status(500).json(error.message);
+    }
+};
+
+// Get user
+export const getUser = async (req, res) => {
+    const userID = req.params.id;
+    try {
+        const user = await userService.findUserByID(userID);
+        return res.status(200).json(user);
     } catch (error) {
         return res.status(500).json(error.message);
     }

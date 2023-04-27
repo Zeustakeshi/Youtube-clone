@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { updateMenuStatus } from "../redux/slices/app/appSlice";
-import { login } from "../redux/slices/user/userSlice";
+import { login, register } from "../redux/slices/user/userSlice";
 import { RootState } from "../redux/store";
 
 const AuthPage = () => {
@@ -84,8 +84,25 @@ const RegisterForm = () => {
     const [userName, setUserName] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const dispatch = useDispatch();
+
+    const handleRegister = (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        if (!userName.trim() || !email.trim() || !password.trim()) return;
+        dispatch(
+            register({
+                userName,
+                email,
+                password,
+            })
+        );
+    };
+
     return (
-        <form className="flex flex-col justify-start items-center gap-3">
+        <form
+            onSubmit={handleRegister}
+            className="flex flex-col justify-start items-center gap-3"
+        >
             <input
                 value={userName}
                 onChange={(e) => setUserName(e.target.value)}

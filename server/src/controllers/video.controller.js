@@ -3,8 +3,8 @@ import videoService from "../services/video.service.js";
 import { nonAccentVietnamese } from "../utils/nonAccentVietnamese.js";
 export const addNew = async (req, res) => {
     const userID = req.userID;
-    const { title, thumbnailURL, videoURL, tags } = req.body;
-    if (!thumbnailURL || !videoURL) {
+    const { title, thumbnailURL, youtubeID, tags } = req.body;
+    if (!thumbnailURL || !youtubeID) {
         return res.status(400).json("Missing data for this action!");
     }
     const searchKeyword = nonAccentVietnamese(title);
@@ -14,7 +14,7 @@ export const addNew = async (req, res) => {
             userID,
             title,
             thumbnailURL,
-            videoURL,
+            youtubeID,
             tags: [searchKeyword, ...searchTags],
         });
         return res.status(200).json(newVideo);
@@ -26,11 +26,11 @@ export const addNew = async (req, res) => {
 export const update = async (req, res) => {
     const userID = req.userID;
     const videoID = req.params.id;
-    const { title, thumbnailURL, videoURL } = req.body;
+    const { title, thumbnailURL, youtubeID } = req.body;
     const updatedFields = {};
     if (title) updatedFields.title = title;
     if (thumbnailURL) updatedFields.thumbnailURL = thumbnailURL;
-    if (videoURL) updatedFields.videoURL = videoURL;
+    if (youtubeID) updatedFields.youtubeID = youtubeID;
 
     if (Object.keys(updatedFields).length === 0) {
         return res.status(400).json("Missing data for this action!");

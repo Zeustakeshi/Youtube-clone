@@ -15,7 +15,11 @@ const VideoSchema = new Schema(
             type: String,
             required: true,
         },
-        videoURL: {
+        // videoURL: {
+        //     type: String,
+        //     required: true,
+        // },
+        youtubeID: {
             type: String,
             required: true,
         },

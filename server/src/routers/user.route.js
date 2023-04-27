@@ -1,5 +1,6 @@
 import express from "express";
 import {
+    getUser,
     login,
     register,
     subscribe,
@@ -8,6 +9,9 @@ import {
 } from "../controllers/user.controller.js";
 import authMiddleware from "../middlewares/auth.middleware.js";
 const router = express.Router();
+
+// Get user
+router.get("/:id", getUser);
 
 // Register
 router.post("/register", register);

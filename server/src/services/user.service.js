@@ -13,6 +13,15 @@ class UserService {
         return user;
     }
 
+    async findUserByID(userID) {
+        const user = await UserModel.findById(userID, {
+            username: 1,
+            avatar: 1,
+        });
+        if (!user) throw new Error("User not found!");
+        return user;
+    }
+
     async updateInfo(userID, updatedFields) {
         const userUpdate = await UserModel.findByIdAndUpdate(
             userID,

@@ -19,6 +19,7 @@ const userSlice = createSlice({
     name: "user",
     initialState: initialState,
     reducers: {
+        getUserFromLocalStorage() {},
         login(state, action: PayloadAction<IUserLoginDataField>) {},
         register(state, action: PayloadAction<IUserRegisterDataField>) {},
         fetchUserSuccess(state, action: PayloadAction<User>) {
@@ -44,6 +45,11 @@ const userSlice = createSlice({
     },
 });
 
-export const { login, register, fetchUserSuccess, fetchUserFailure } =
-    userSlice.actions;
+export const {
+    getUserFromLocalStorage,
+    login,
+    register,
+    fetchUserSuccess,
+    fetchUserFailure,
+} = userSlice.actions;
 export default userSlice.reducer;

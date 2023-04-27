@@ -1,9 +1,15 @@
 import { all, takeLatest } from "redux-saga/effects";
-import { LoginSaga } from "./userHandler";
-import { login } from "./userSlice";
-// import {} from "./appHandler";
-// import {} from "./appSlice";
+import {
+    getUserFromLocalStorageSaga,
+    LoginSaga,
+    RegisterSaga,
+} from "./userHandler";
+import { getUserFromLocalStorage, login, register } from "./userSlice";
 
 export default function* userSaga() {
-    yield all([takeLatest(login.type, LoginSaga)]);
+    yield all([
+        takeLatest(login.type, LoginSaga),
+        takeLatest(register.type, RegisterSaga),
+        takeLatest(getUserFromLocalStorage.type, getUserFromLocalStorageSaga),
+    ]);
 }
