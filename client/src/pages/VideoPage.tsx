@@ -1,6 +1,6 @@
 import ShareOutlinedIcon from "@mui/icons-material/ShareOutlined";
 import ThumbUpOutlinedIcon from "@mui/icons-material/ThumbUpOutlined";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Avatar from "../components/avatar/Avatar";
 import Video from "../components/video/Video";
@@ -9,17 +9,48 @@ import { updateMenuSize, updateMenuStatus } from "../redux/slices/app/appSlice";
 import VideoDescription from "../components/video/VideoDescription";
 import VideoComment from "../components/video/VideoComment";
 import RelatedVideo from "../components/video/RelatedVideo";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { IVideo } from "../interfaces/Video.interface";
 import { RootState } from "../redux/store";
+import ButtonLike from "../components/button/ButtonLike";
+import axios from "axios";
+import { API_URL } from "../utils/const";
 const VideoPage = () => {
     const dispatch = useDispatch();
     const { video }: { video: IVideo } = useLocation().state;
     const user = useSelector((state: RootState) => state.user);
+    const navigation = useNavigate();
     useEffect(() => {
         dispatch(updateMenuStatus("hidden"));
         dispatch(updateMenuSize("mini"));
     }, []);
+
+    const handleLikeVideo = async () => {
+        if (!document.cookie || !user._id) {
+            navigation("/auth");
+        }
+        await axios({
+            method: "PATCH",
+            url: API_URL + `/video/${video._id}/like`,
+            headers: {
+                authorization: `Bearer ${document.cookie.split("=")[1]}`,
+            },
+        });
+    };
+
+    const handleUnLikeVideo = async () => {
+        if (!document.cookie || !user._id) {
+            navigation("/auth");
+        }
+        await axios({
+            method: "PATCH",
+            url: API_URL + `/video/${video._id}/unlike`,
+            headers: {
+                authorization: `Bearer ${document.cookie.split("=")[1]}`,
+            },
+        });
+    };
+
     return (
         <div className="mx-auto flex items-start justify-center w-[1780px]  p-3 py-4 gap-10">
             <div className="max-w-[1280px]">
@@ -47,12 +78,16 @@ const VideoPage = () => {
                             </button>
                         </div>
                         <div className="flex justify-end items-center gap-3 text-xs">
-                            <button className="flex justify-center items-center gap-2 rounded-full bg-slate-200 px-4 py-2">
-                                <ThumbUpOutlinedIcon fontSize="small" />
-                                <span className="font-medium">
-                                    {video.likes.length}
-                                </span>
-                            </button>
+                            <ButtonLike
+                                isLiked={
+                                    typeof user._id === "string" &&
+                                    video.likes.includes(user._id)
+                                }
+                                likeNumber={video.likes.length}
+                                onLike={handleLikeVideo}
+                                onUnLike={handleUnLikeVideo}
+                                className="flex justify-center items-center gap-2 rounded-full bg-slate-200 px-4 py-2"
+                            ></ButtonLike>
                             <button className="flex justify-center items-center gap-2 rounded-full bg-slate-200 px-4 py-2">
                                 <ShareOutlinedIcon fontSize="small" />
                                 <span className="font-medium">Chia sẻ</span>
@@ -71,7 +106,9 @@ const VideoPage = () => {
                         updatedAt={video.updatedAt}
                     ></VideoDescription>
                 </div>
-                {user._id && <VideoComment></VideoComment>}
+                {user._id && typeof video._id === "string" && (
+                    <VideoComment videoID={video._id}></VideoComment>
+                )}
             </div>
             <div className="min-w-[350px]">
                 <RelatedVideo></RelatedVideo>

@@ -1,20 +1,46 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { IComment } from "../../interfaces/Comment.interface";
 import Avatar from "../avatar/Avatar";
 import ThumbUpOutlinedIcon from "@mui/icons-material/ThumbUpOutlined";
 import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
-const VideoComment = () => {
+import axios from "axios";
+import { API_URL } from "../../utils/const";
+import { AuthorType } from "../../interfaces/User.interface";
+import moment from "moment";
+const VideoComment = ({ videoID }: { videoID: string }) => {
+    const [comments, setCommnents] = useState<IComment[]>([]);
+
+    useEffect(() => {
+        (async () => {
+            try {
+                const res = await axios({
+                    method: "GET",
+                    url: API_URL + `/comment/${videoID}`,
+                    withCredentials: true,
+                });
+                setCommnents(res.data);
+            } catch (error) {
+                console.log(error);
+            }
+        })();
+    }, []);
+
     return (
         <div className="text-sm min-h-[100vh]">
             <div className="my-3">
-                <p>971 bình luận</p>
+                <p>{comments.length} bình luận</p>
             </div>
             <div className="">
                 <CommentInput></CommentInput>
                 <div className="my-5">
-                    {new Array(20).fill(0).map((item, index) => {
-                        return <CommentItem key={index}></CommentItem>;
+                    {comments.map((comment: IComment, index) => {
+                        return (
+                            <CommentItem
+                                comment={comment}
+                                key={index}
+                            ></CommentItem>
+                        );
                     })}
                 </div>
             </div>
@@ -22,49 +48,47 @@ const VideoComment = () => {
     );
 };
 
-const CommentItem = () => {
-    const [showAll, setShowAll] = useState(false);
-    const comment = `Loreur vero eligendi p Lorem ipsum dolor sit amet
-    consectetur adipisicing elit. Adipisci, dicta. Lorem ipsum
-    dolor sit amet consectetur adipisicing elit. Qui, ipsam
-    repellendus, rem blanditiis natus quasi nam neque alias
-    perspiciatis quas, consequatur ab dolore quidem? Magnam
-    possimus consequuntur ex nihil distinctio? Lorem ipsum dolor
-    sit amet consectetur adipisicing elit. Necessitatibus
-    doloremque, maxime exercitationem impedit eos esse eaque
-    ducimus corporis, iure odio is quas, consequatur ab dolore quidem? Magnam
-    possimus consequuntur ex nihil distinctio? Lorem ipsum dolor
-    sit amet consectetur adipisicing elit. Necessitatibus
-    doloremque, maxime exercitationem impedit eos esse eaque
-    ducimus corporis, iure odiis quas, consequatur ab dolore quidem? Magnam
-    possimus consequuntur ex nihil distinctio? Lorem ipsum dolor
-    sit amet consectetur adipisicing elit. Necessitatibus
-    doloremque, maxime exercitationem impedit eos esse eaque
-    ducimus corporis, iure odi saepe est incidunt asperiores?
-    Quas iste maiores officia veniam totam qui omnis. Commodi
-    quo fuga a saepe! Modi amet eius aspernatur, eveniet iste
-    culpa doloremque sit, quas rerum obcaecati voluptatum!`;
+const CommentItem = ({ comment }: { comment: IComment }) => {
+    const [author, setAuthor] = useState<AuthorType>();
 
+    useEffect(() => {
+        (async () => {
+            try {
+                const res = await axios({
+                    method: "GET",
+                    url: API_URL + `/user/${comment.userID}`,
+                    withCredentials: true,
+                });
+                setAuthor(res.data);
+            } catch (error) {
+                console.log(error);
+            }
+        })();
+    }, []);
+
+    const [showAll, setShowAll] = useState(false);
     return (
         <div className="group flex justify-start items-start gap-2 my-5 transition-all">
             <Avatar
-                src="https://source.unsplash.com/featured?man"
+                src={author?.avatar}
                 size={40}
                 className="min-w-[40px]"
             ></Avatar>
             <div>
                 <div className="flex justify-start items-center gap-1 text-xs">
-                    <span className="font-medium">Minh Hieu</span>
-                    <span className="text-gray-500">2 tháng trước</span>
+                    <span className="font-medium">{author?.username}</span>
+                    <span className="text-gray-500">
+                        {moment(comment.updatedAt).fromNow()}
+                    </span>
                 </div>
                 <p
                     className={`my-2 ${
                         !showAll ? "max-h-[100px]  overflow-clip" : ""
                     }`}
                 >
-                    {comment}
+                    {comment.comment}
                 </p>
-                {comment.length >= 800 && (
+                {comment.comment.length >= 800 && (
                     <button
                         className="text-slate-500 text-xs"
                         onClick={() => setShowAll((prev) => !prev)}
@@ -76,7 +100,9 @@ const CommentItem = () => {
                     <div className="cursor-pointer flex w-[35px] h-[35px]  justify-center items-center rounded-full text-sm ">
                         <ThumbUpOutlinedIcon fontSize="inherit"></ThumbUpOutlinedIcon>
                     </div>
-                    <span className="text-xs text-gray-600">40</span>
+                    <span className="text-xs text-gray-600">
+                        {comment.likes.length}
+                    </span>
                 </div>
             </div>
         </div>

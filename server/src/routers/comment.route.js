@@ -7,11 +7,11 @@ import {
 import authMiddleware from "../middlewares/auth.middleware.js";
 const router = express.Router();
 
-// apply middleware
-router.use(authMiddleware);
-
 // Get comment
 router.get("/:videoID", getComment);
+
+// apply middleware
+router.use(authMiddleware);
 
 // New comment
 router.post("/", addNew);
