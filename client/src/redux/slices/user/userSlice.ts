@@ -42,6 +42,10 @@ const userSlice = createSlice({
         fetchUserFailure(state, action: PayloadAction<string>) {
             state.error = action.payload;
         },
+        updateUserSubscribed(state, action: PayloadAction<string[]>) {
+            state.subscribedUsers = action.payload;
+            localStorage.setItem("current-user", JSON.stringify(state));
+        },
     },
 });
 
@@ -51,5 +55,6 @@ export const {
     register,
     fetchUserSuccess,
     fetchUserFailure,
+    updateUserSubscribed,
 } = userSlice.actions;
 export default userSlice.reducer;

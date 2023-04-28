@@ -15,6 +15,7 @@ import { RootState } from "../redux/store";
 import ButtonLike from "../components/button/ButtonLike";
 import axios from "axios";
 import { API_URL } from "../utils/const";
+import ButtonSubscribe from "../components/button/ButtonSubscribe";
 const VideoPage = () => {
     const dispatch = useDispatch();
     const { video }: { video: IVideo } = useLocation().state;
@@ -73,9 +74,17 @@ const VideoPage = () => {
                                     {video.author?.subscribers} người đăng ký
                                 </span>
                             </div>
-                            <button className="px-3 py-2 text-xs rounded-full text-white font-medium bg-black">
-                                Đăng ký
-                            </button>
+                            <ButtonSubscribe
+                                channelID={video.author?._id}
+                                subscribed={
+                                    typeof user._id === "string" &&
+                                    typeof video.author?._id === "string" &&
+                                    user.subscribedUsers.includes(
+                                        video.author?._id
+                                    )
+                                }
+                                className=""
+                            ></ButtonSubscribe>
                         </div>
                         <div className="flex justify-end items-center gap-3 text-xs">
                             <ButtonLike
