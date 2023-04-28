@@ -3,6 +3,8 @@ import {
     addNew,
     deleteComment,
     getComment,
+    likeComment,
+    unLikeComment,
 } from "../controllers/comment.controller.js";
 import authMiddleware from "../middlewares/auth.middleware.js";
 const router = express.Router();
@@ -20,5 +22,7 @@ router.post("/", addNew);
 router.delete("/", deleteComment);
 
 // Like comment
+router.patch("/:id/like", likeComment);
+router.patch("/:id/unlike", unLikeComment);
 
 export default router;

@@ -32,10 +32,10 @@ const LoginFrom = () => {
     const dispatch = useDispatch();
     const navigation = useNavigate();
     useEffect(() => {
-        if (!error && _id) {
+        if (!error && _id && document.cookie) {
             navigation("/");
         }
-    }, [error, _id]);
+    }, [error, _id, document.cookie]);
 
     const handleLogin = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();

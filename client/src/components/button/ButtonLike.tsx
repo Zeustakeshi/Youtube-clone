@@ -1,6 +1,9 @@
 import React, { useState } from "react";
 import ThumbUpOutlinedIcon from "@mui/icons-material/ThumbUpOutlined";
 import ThumbUpRoundedIcon from "@mui/icons-material/ThumbUpRounded";
+import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { RootState } from "../../redux/store";
 interface IButtonLikeProps {
     className?: string;
     isShowLikeNumber?: boolean;
@@ -20,7 +23,13 @@ const ButtonLike: React.FC<IButtonLikeProps> = ({
 }) => {
     const [liked, setLiked] = useState(isLiked);
     const [couterLike, setCouterLike] = useState(likeNumber);
+    const user = useSelector((state: RootState) => state.user);
+    const navigation = useNavigate();
     const handleClick = async () => {
+        if (!document.cookie || !user._id) {
+            navigation("/auth");
+            return;
+        }
         try {
             if (!liked) {
                 await onLike();

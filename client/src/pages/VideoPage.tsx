@@ -1,21 +1,21 @@
-import ShareOutlinedIcon from "@mui/icons-material/ShareOutlined";
-import ThumbUpOutlinedIcon from "@mui/icons-material/ThumbUpOutlined";
-import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import Avatar from "../components/avatar/Avatar";
-import Video from "../components/video/Video";
 import AddToPhotosOutlinedIcon from "@mui/icons-material/AddToPhotosOutlined";
-import { updateMenuSize, updateMenuStatus } from "../redux/slices/app/appSlice";
-import VideoDescription from "../components/video/VideoDescription";
-import VideoComment from "../components/video/VideoComment";
-import RelatedVideo from "../components/video/RelatedVideo";
-import { useLocation, useNavigate } from "react-router-dom";
-import { IVideo } from "../interfaces/Video.interface";
-import { RootState } from "../redux/store";
-import ButtonLike from "../components/button/ButtonLike";
+import ShareOutlinedIcon from "@mui/icons-material/ShareOutlined";
 import axios from "axios";
-import { API_URL } from "../utils/const";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useLocation, useNavigate } from "react-router-dom";
+import Avatar from "../components/avatar/Avatar";
+import ButtonLike from "../components/button/ButtonLike";
 import ButtonSubscribe from "../components/button/ButtonSubscribe";
+import RelatedVideo from "../components/video/RelatedVideo";
+import Video from "../components/video/Video";
+import VideoComment from "../components/video/VideoComment";
+import VideoDescription from "../components/video/VideoDescription";
+import { IVideo } from "../interfaces/Video.interface";
+import { updateMenuSize, updateMenuStatus } from "../redux/slices/app/appSlice";
+import { RootState } from "../redux/store";
+import { API_URL } from "../utils/const";
+
 const VideoPage = () => {
     const dispatch = useDispatch();
     const { video }: { video: IVideo } = useLocation().state;
@@ -27,9 +27,6 @@ const VideoPage = () => {
     }, []);
 
     const handleLikeVideo = async () => {
-        if (!document.cookie || !user._id) {
-            navigation("/auth");
-        }
         await axios({
             method: "PATCH",
             url: API_URL + `/video/${video._id}/like`,
@@ -40,9 +37,6 @@ const VideoPage = () => {
     };
 
     const handleUnLikeVideo = async () => {
-        if (!document.cookie || !user._id) {
-            navigation("/auth");
-        }
         await axios({
             method: "PATCH",
             url: API_URL + `/video/${video._id}/unlike`,

@@ -68,7 +68,7 @@ const VideoItem = ({ video }: { video: IVideo }) => {
                                     <span>{video.views} lượt xem</span>
                                     <span> • </span>
                                     <span>
-                                        {moment(video.updatedAt).fromNow()}
+                                        {moment(video.createdAt).fromNow()}
                                     </span>
                                 </div>
                             </>

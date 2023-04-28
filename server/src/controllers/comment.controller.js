@@ -43,3 +43,27 @@ export const deleteComment = async (req, res) => {
         return res.status(500).json(error.message);
     }
 };
+
+export const likeComment = async (req, res) => {
+    const userID = req.userID;
+    const commentID = req.params.id;
+
+    try {
+        await commentService.likeComment(commentID, userID);
+        return res.status(200).json("Like comment success!");
+    } catch (error) {
+        return res.status(500).json(error.message);
+    }
+};
+
+export const unLikeComment = async (req, res) => {
+    const userID = req.userID;
+    const commentID = req.params.id;
+
+    try {
+        await commentService.unLikeComment(commentID, userID);
+        return res.status(200).json("unLike comment success!");
+    } catch (error) {
+        return res.status(500).json(error.message);
+    }
+};
