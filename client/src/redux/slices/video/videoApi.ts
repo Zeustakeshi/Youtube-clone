@@ -10,7 +10,9 @@ export const fetchVideoApi = async (payload?: FetchVideoPayloadType) => {
         method: "GET",
         url: API_URL + "/video",
         params: {
-            tag: payload?.query,
+            tag: payload?.tag,
+            page: payload?.page,
+            limit: payload?.limit,
         },
         withCredentials: true,
     });

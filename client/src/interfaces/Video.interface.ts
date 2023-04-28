@@ -21,10 +21,13 @@ export interface IVideoState {
     error: string | null;
     itemCount: number;
     pageCount: number;
+    currentPage: number;
 }
 
 export interface FetchVideoPayloadType {
-    query: string;
+    tag?: string;
+    page?: number;
+    limit?: number;
 }
 
 export interface IVideoResponse {

@@ -1,7 +1,10 @@
 import { all, takeLatest } from "redux-saga/effects";
-import { fetchVideoSaga } from "./videoHandller";
-import { fetchVideo } from "./videoSlice";
+import { fetchLoadMoreVideoSaga, fetchVideoSaga } from "./videoHandller";
+import { fetchLoadMoreVideo, fetchVideo } from "./videoSlice";
 
 export default function* videoSaga() {
-    yield all([takeLatest(fetchVideo.type, fetchVideoSaga)]);
+    yield all([
+        takeLatest(fetchVideo.type, fetchVideoSaga),
+        takeLatest(fetchLoadMoreVideo.type, fetchLoadMoreVideoSaga),
+    ]);
 }
