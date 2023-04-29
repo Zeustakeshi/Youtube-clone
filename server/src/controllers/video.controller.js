@@ -1,5 +1,6 @@
 import userService from "../services/user.service.js";
 import videoService from "../services/video.service.js";
+import searchService from "../services/search.service.js";
 import { nonAccentVietnamese } from "../utils/nonAccentVietnamese.js";
 export const addNew = async (req, res) => {
     const userID = req.userID;
@@ -17,6 +18,9 @@ export const addNew = async (req, res) => {
             youtubeID,
             tags: [searchKeyword, ...searchTags],
         });
+        await searchService.createNewSearchKeyWord(
+            nonAccentVietnamese(newVideo.title)
+        );
         return res.status(200).json(newVideo);
     } catch (error) {
         return res.status(500).json(error.message);
@@ -83,24 +87,20 @@ export const deleteVideo = async (req, res) => {
 
 export const getVideo = async (req, res) => {
     const page = parseInt(req.query.page) || 1;
-    const limit = parseInt(req.query.limit) || 5;
+    const limit = parseInt(req.query.limit) || 10;
+    const tags = req.query.tags?.split(",");
     const skip = (page - 1) * limit;
 
-    if (page) {
-        try {
-            const data = await videoService.getVideoLimit(skip, limit);
-            return res.status(200).json(data);
-        } catch (error) {
-            return res.status(500).json(error.message);
-        }
-    } else {
-        //get all video
-        try {
-            const videos = await videoService.getAllVideo();
+    try {
+        if (tags) {
+            const videos = await videoService.getVideoByTags(tags, skip);
             return res.status(200).json(videos);
-        } catch (error) {
-            return res.status(500).json(error.message);
+        } else {
+            const videos = await videoService.getVideoLimit(skip, limit);
+            return res.status(200).json(videos);
         }
+    } catch (error) {
+        return res.status(500).json(error.message);
     }
 };
 

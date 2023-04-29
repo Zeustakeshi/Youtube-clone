@@ -20,7 +20,9 @@
         "express": "^4.18.2",
         "helmet": "^6.1.4",
         "jsonwebtoken": "^9.0.0",
-        "mongoose": "^7.0.4"
+        "mongoose": "^7.0.4",
+        "natural": "^6.2.0",
+        "natural-brain": "^0.3.2"
     },
     "devDependencies": {
         "nodemon": "^2.0.22"

@@ -1,0 +1,8 @@
+### ADD SEARCH KEYWORD
+POST http://localhost:4000/api/search/video/insert
+authorization : Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NDQzN2M5M2NiZmUwYzI0MmMwZjFjYmEiLCJpYXQiOjE2ODIxNTEyNTF9.upFvpvg8fABsJ89WwwS4e-QLBv8am7GYP8stuRkIi9E
+Content-Type: application/json
+
+{
+   "title": "Full Stack Airbnb Clone with Next.js 13 App Router: React, Tailwind, Prisma, MongoDB, NextAuth 2023"
+}

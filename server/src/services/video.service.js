@@ -94,6 +94,14 @@ class VideoService {
             .sort({ createdAt: -1 });
         return videos;
     }
+
+    async getVideoByTags(tags, skip = 0, limit) {
+        const videos = await VideoModel.find({ tags: { $in: tags } })
+            .limit(limit)
+            .skip(skip)
+            .sort({ createdAt: -1 });
+        return videos;
+    }
 }
 
 export default new VideoService();
