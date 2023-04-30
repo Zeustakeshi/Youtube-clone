@@ -19,6 +19,7 @@ interface ISearchContext {
     >;
     setSearchKeyword: React.Dispatch<React.SetStateAction<string>>;
     setShowResults: React.Dispatch<React.SetStateAction<boolean>>;
+    removeSuggestionKeywordHistorys: (_id: string) => void;
 }
 
 interface ISearchSuggestionKeywords {
@@ -71,6 +72,17 @@ const SearchProvider: React.FC<SearchProviderProps> = ({ children }) => {
         }
     };
 
+    const removeSuggestionKeywordHistorys = (_id: string) => {
+        const newSuggestionKeywordHistories = suggestionKeywordHistorys.filter(
+            (item) => item._id !== _id
+        );
+        setSuggestionKeywordHistories(newSuggestionKeywordHistories);
+        localStorage.setItem(
+            "search-history",
+            JSON.stringify(newSuggestionKeywordHistories)
+        );
+    };
+
     const values = {
         suggestionKeywordHistorys,
         suggestionKeywords,
@@ -80,6 +92,7 @@ const SearchProvider: React.FC<SearchProviderProps> = ({ children }) => {
         setSearchKeyword,
         setSuggestionKeywords,
         setSuggestionKeywordHistories,
+        removeSuggestionKeywordHistorys,
     };
 
     return (

@@ -47,6 +47,7 @@ const SearchResult: SearchResultType = (
                 return (
                     <SearchResultItem
                         key={index}
+                        _id={item._id}
                         onClick={() => {
                             navigation(`/results?q=${item.keyword}`);
                         }}
@@ -59,6 +60,7 @@ const SearchResult: SearchResultType = (
                     return (
                         <SearchResultItem
                             isHistory
+                            _id={item._id}
                             key={index}
                             onClick={() => {
                                 navigation(`/results?q=${item.keyword}`);

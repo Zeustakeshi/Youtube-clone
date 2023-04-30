@@ -3,11 +3,15 @@ export default function generateKeywordSuggestions(keyword, availableKeywords) {
     for (const availableKeyword of availableKeywords) {
         const similarity = calculateKeywordSimilarity(
             keyword,
-            availableKeyword
+            availableKeyword.keyword
         );
 
         if (similarity >= 0.14) {
-            suggestions.push({ keyword: availableKeyword, similarity });
+            suggestions.push({
+                _id: availableKeyword._id,
+                keyword: availableKeyword.keyword,
+                similarity,
+            });
         }
     }
 

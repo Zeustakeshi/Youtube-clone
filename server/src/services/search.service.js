@@ -18,11 +18,7 @@ class SearchService {
 
     async getSuggestionKeywords(searchKeyword) {
         const keywords = await SearchKeywordModel.find({});
-
-        const resluts = generateKeywordSuggestions(
-            searchKeyword,
-            keywords.map((keyword) => keyword.keyword)
-        );
+        const resluts = generateKeywordSuggestions(searchKeyword, keywords);
         return resluts.sort((a, b) => b.similarity - a.similarity).slice(0, 10);
     }
 }
