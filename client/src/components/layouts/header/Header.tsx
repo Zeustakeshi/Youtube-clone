@@ -1,6 +1,7 @@
 import MoreVertOutlinedIcon from "@mui/icons-material/MoreVertOutlined";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { SearchProvider } from "../../../context/SearchContext";
 import { toggleMenu } from "../../../redux/slices/app/appSlice";
 import { RootState } from "../../../redux/store";
 import Avatar from "../../avatar/Avatar";
@@ -9,7 +10,7 @@ import ButtonLogin from "../../button/ButtonLogin";
 import ButtonToggleMenu from "../../button/ButtonToggleMenu";
 import Logo from "../../Logo/Logo";
 import Notification from "../../notification/Notification";
-import { Search } from "../../search/Search";
+import Search from "../../search/Search";
 const Header = () => {
     const dispatch = useDispatch();
 
@@ -26,7 +27,9 @@ const Header = () => {
                         <Logo className="transition-all w-[100px] h-[48px] flex justify-center items-center"></Logo>
                     </div>
                 </div>
-                <Search></Search>
+                <SearchProvider>
+                    <Search></Search>
+                </SearchProvider>
                 <HeaderAction></HeaderAction>
             </div>
         </div>

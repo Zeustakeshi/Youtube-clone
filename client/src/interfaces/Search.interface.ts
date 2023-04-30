@@ -12,3 +12,9 @@ export interface ISearchState {
     searchHistory: ISearchHistory[];
     keywordSuggestions: string[];
 }
+
+export interface ISearchKeywordResponse {
+    _id: string;
+    keyword: string;
+    similarity: number;
+}

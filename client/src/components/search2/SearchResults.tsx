@@ -1,7 +1,10 @@
 import HistoryOutlinedIcon from "@mui/icons-material/HistoryOutlined";
 import { ForwardedRef, forwardRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { removeSearchHistory } from "../../redux/slices/search/searchSlice";
+import {
+    clearSearchKeyword,
+    removeSearchHistory,
+} from "../../redux/slices/search/searchSlice";
 import { RootState } from "../../redux/store";
 import useClickOutSide from "./useClickOutsite";
 
@@ -13,10 +16,12 @@ const SearchResults = (
         (state: RootState) => state.search
     );
 
+    const dispatch = useDispatch();
+
     const nodeRef = ref;
     const { nodeRef: clickRef } = useClickOutSide<HTMLDivElement>(() => {
-        console.log("out");
         setShow(false);
+        dispatch(clearSearchKeyword());
     }, nodeRef);
 
     return (
@@ -24,25 +29,34 @@ const SearchResults = (
             ref={clickRef}
             className="absolute top-[120%] left-0 w-full py-3 rounded-lg z-50 bg-white shadow-[rgba(50,50,93,0.25)_0px_2px_5px_-1px,rgba(0,0,0,0.3)_0px_1px_3px_-1px]"
         >
-            {keywordSuggestions.length <= 0 &&
-                searchHistory &&
-                [...searchHistory].slice(0, 10).map((item, index) => {
-                    return (
-                        <SearchResultItem
-                            key={index}
-                            id={item.id}
-                            keyword={item.value}
-                            isHistory
-                        />
-                    );
-                })}
+            {keywordSuggestions.length <= 0
+                ? searchHistory &&
+                  [...searchHistory].slice(0, 10).map((item, index) => {
+                      return (
+                          <SearchResultItem
+                              key={index}
+                              id={item.id}
+                              keyword={item.value}
+                              isHistory
+                          />
+                      );
+                  })
+                : [...keywordSuggestions].slice(0, 10).map((item, index) => {
+                      return (
+                          <SearchResultItem
+                              key={index}
+                              keyword={item}
+                              isHistory
+                          />
+                      );
+                  })}
         </div>
     );
 };
 
 interface SearchResultItemProps {
     keyword: string;
-    id: string;
+    id?: string;
     isHistory?: boolean;
 }
 
@@ -63,7 +77,7 @@ const SearchResultItem: React.FC<SearchResultItemProps> = ({
                 )}
                 <p className="font-medium">{keyword}</p>
             </div>
-            {isHistory && (
+            {isHistory && id && (
                 <button
                     className="text-blue-500"
                     onClick={() => dispatch(removeSearchHistory(id))}

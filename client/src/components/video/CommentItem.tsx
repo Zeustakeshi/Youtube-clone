@@ -30,7 +30,7 @@ const CommentItem = ({ comment }: { comment: IComment }) => {
     }, []);
 
     const handleLikeComment = async () => {
-        const res = await axios({
+        await axios({
             method: "PATCH",
             url: API_URL + `/comment/${comment._id}/like`,
             headers: {
@@ -39,7 +39,7 @@ const CommentItem = ({ comment }: { comment: IComment }) => {
         });
     };
     const handleUnLikeComment = async () => {
-        const res = await axios({
+        await axios({
             method: "PATCH",
             url: API_URL + `/comment/${comment._id}/unlike`,
             headers: {

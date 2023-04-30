@@ -52,9 +52,9 @@ const ButtonLike: React.FC<IButtonLikeProps> = ({
     return (
         <button onClick={handleClick} className={className}>
             {liked ? (
-                <ThumbUpRoundedIcon fontSize="small" />
+                <ThumbUpRoundedIcon fontSize="inherit" />
             ) : (
-                <ThumbUpOutlinedIcon fontSize="small" />
+                <ThumbUpOutlinedIcon fontSize="inherit" />
             )}
 
             {isShowLikeNumber && (

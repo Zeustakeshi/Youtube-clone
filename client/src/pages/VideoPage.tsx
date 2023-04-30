@@ -3,7 +3,7 @@ import ShareOutlinedIcon from "@mui/icons-material/ShareOutlined";
 import axios from "axios";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import Avatar from "../components/avatar/Avatar";
 import ButtonLike from "../components/button/ButtonLike";
 import ButtonSubscribe from "../components/button/ButtonSubscribe";
@@ -20,7 +20,11 @@ const VideoPage = () => {
     const dispatch = useDispatch();
     const { video }: { video: IVideo } = useLocation().state;
     const user = useSelector((state: RootState) => state.user);
-    const navigation = useNavigate();
+
+    useEffect(() => {
+        document.title = video.title;
+    }, [video.title]);
+
     useEffect(() => {
         dispatch(updateMenuStatus("hidden"));
         dispatch(updateMenuSize("mini"));
@@ -89,7 +93,7 @@ const VideoPage = () => {
                                 likeNumber={video.likes.length}
                                 onLike={handleLikeVideo}
                                 onUnLike={handleUnLikeVideo}
-                                className="flex justify-center items-center gap-2 rounded-full bg-slate-200 px-4 py-2"
+                                className="flex justify-center items-center gap-2 rounded-full bg-slate-200 px-4 py-2 text-base"
                             ></ButtonLike>
                             <button className="flex justify-center items-center gap-2 rounded-full bg-slate-200 px-4 py-2">
                                 <ShareOutlinedIcon fontSize="small" />

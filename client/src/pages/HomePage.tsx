@@ -8,6 +8,7 @@ const HomePage = () => {
     const dispatch = useDispatch();
     useEffect(() => {
         dispatch(updateMenuStatus("show"));
+        document.title = "YouTube";
     }, []);
 
     return (

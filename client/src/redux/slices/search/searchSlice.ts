@@ -1,7 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { ISearchState } from "../../../interfaces/Search.interface";
-import { User } from "../../../interfaces/User.interface";
 import { v4 as uuidv4 } from "uuid";
+import { ISearchState } from "../../../interfaces/Search.interface";
 const initialState: ISearchState = {
     results: [],
     isSuccess: false,
@@ -15,6 +14,15 @@ const searchSlice = createSlice({
     initialState: initialState,
     reducers: {
         fetchSearchKeyword(state, acticon) {},
+        clearSearchKeyword(state) {
+            state.keywordSuggestions = [];
+        },
+        fetchSearchSuccess(state, action: PayloadAction<string[]>) {
+            state.keywordSuggestions = action.payload;
+        },
+        fetchSearchFailure(state, action: PayloadAction<string>) {
+            state.error = action.payload;
+        },
         loadSearchHistory(state) {
             const historyStorage = localStorage.getItem("search-history");
             if (historyStorage) {
@@ -43,6 +51,13 @@ const searchSlice = createSlice({
     },
 });
 
-export const { loadSearchHistory, setSearchHistory, removeSearchHistory } =
-    searchSlice.actions;
+export const {
+    loadSearchHistory,
+    setSearchHistory,
+    removeSearchHistory,
+    fetchSearchSuccess,
+    fetchSearchFailure,
+    fetchSearchKeyword,
+    clearSearchKeyword,
+} = searchSlice.actions;
 export default searchSlice.reducer;

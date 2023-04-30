@@ -1,7 +1,7 @@
 import { all, takeLatest } from "redux-saga/effects";
-// import {} from "./appHandler";
-// import {} from "./appSlice";
+import { fetchSearchKeywordSaga } from "./searchHandler";
+import { fetchSearchKeyword } from "./searchSlice";
 
 export default function* searchSaga() {
-    // yield all([takeLatest(getTodo.type, handleGetTodo)]);
+    yield all([takeLatest(fetchSearchKeyword.type, fetchSearchKeywordSaga)]);
 }
