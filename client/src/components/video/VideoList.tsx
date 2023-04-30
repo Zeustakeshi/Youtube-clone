@@ -57,7 +57,7 @@ const VideoList = () => {
             }}
             hasMore={page.currentPage <= page.pageCount}
             loader={new Array(20).fill(0).map((video, index) => {
-                return <VideoItem key={index} isLoading={true}></VideoItem>;
+                return <VideoItem key={index}></VideoItem>;
             })}
         >
             {videos.map((video, index) => {

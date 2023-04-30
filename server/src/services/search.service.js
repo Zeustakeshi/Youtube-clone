@@ -9,8 +9,8 @@ class SearchService {
         newSearchKeyWord.save();
     }
 
-    async searchVideo(searchRegex, limit = 20) {
-        const videos = await VideoModel.find({ tags: { $in: searchRegex } })
+    async searchVideo(searchKeywords, limit = 20) {
+        const videos = await VideoModel.find({ tags: { $in: searchKeywords } })
             .limit(limit)
             .sort({ createdAt: -1 });
         return videos;

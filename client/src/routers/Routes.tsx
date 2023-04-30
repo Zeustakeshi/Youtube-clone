@@ -4,6 +4,7 @@ import MainLayout from "../components/layouts/mainLayout/MainLayout";
 import HomePage from "../pages/HomePage";
 import AuthPage from "../pages/AuthPage";
 import VideoPage from "../pages/VideoPage";
+import ResultPage from "../pages/ResultPage";
 
 const Router = createBrowserRouter([
     {
@@ -17,6 +18,10 @@ const Router = createBrowserRouter([
             {
                 path: "/video/:id",
                 element: <VideoPage></VideoPage>,
+            },
+            {
+                path: "/results",
+                element: <ResultPage></ResultPage>,
             },
             {
                 path: "/auth",

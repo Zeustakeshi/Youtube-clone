@@ -1,5 +1,4 @@
 import escapeStringRegexp from "escape-string-regexp";
-import VideoModel from "../models/Video.model.js";
 import searchService from "../services/search.service.js";
 import { nonAccentVietnamese } from "../utils/nonAccentVietnamese.js";
 
@@ -9,10 +8,13 @@ export const searchVideo = async (req, res) => {
     const escapedSearchValue = escapeStringRegexp(
         nonAccentVietnamese(searchQuery || "")
     );
-    const searchRegex = new RegExp(escapedSearchValue, "i");
+    // const searchRegex = new RegExp(escapedSearchValue, "i");
+    // console.log(searchRegex);
     try {
-        if (searchRegex && searchQuery) {
-            const videos = await searchService.searchVideo(searchRegex);
+        if (escapedSearchValue.length && searchQuery) {
+            const videos = await searchService.searchVideo(
+                escapedSearchValue.split(" ")
+            );
             return res.json(videos);
         }
         if (searchKeyword) {

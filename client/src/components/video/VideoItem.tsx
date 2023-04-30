@@ -8,13 +8,12 @@ import { AuthorType, User } from "../../interfaces/User.interface";
 import axios from "axios";
 import { API_URL } from "../../utils/const";
 
-const VideoItem = ({
-    video,
-    isLoading = false,
-}: {
+interface IVideoItem {
     video?: IVideo;
-    isLoading?: boolean;
-}) => {
+    type?: "normal" | "small" | "horizontal";
+}
+
+const VideoItem: React.FC<IVideoItem> = ({ video, type = "normal" }) => {
     const [author, setAuthor] = useState<AuthorType>();
     const navigation = useNavigate();
     useEffect(() => {
@@ -32,22 +31,33 @@ const VideoItem = ({
             }
         })();
     }, [video]);
+
+    const handleClick = () => {
+        if (!video?._id) return;
+        navigation(`/video/${video._id}`, {
+            state: {
+                video: {
+                    ...video,
+                    author: author,
+                },
+            },
+        });
+    };
+
     return (
         <div
-            onClick={() => {
-                if (!video?._id) return;
-                navigation(`/video/${video._id}`, {
-                    state: {
-                        video: {
-                            ...video,
-                            author: author,
-                        },
-                    },
-                });
-            }}
-            className="block w-[335px] my-4 cursor-pointer"
+            onClick={handleClick}
+            className={`${
+                type === "horizontal"
+                    ? "flex justify-start items-start w-[70%] gap-4"
+                    : "block  w-[335px] my-4 "
+            }  cursor-pointer`}
         >
-            <div className="skeleton w-full h-[190px] rounded-lg">
+            <div
+                className={`skeleton ${
+                    type === "horizontal" ? "w-[335px]" : "w-full"
+                }  h-[190px] rounded-lg`}
+            >
                 {video?.thumbnailURL && (
                     <Image src={video.thumbnailURL}></Image>
                 )}

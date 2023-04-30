@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, { useContext, useEffect, useRef, useState } from "react";
 import { API_URL } from "../utils/const";
+import { v4 as uuidv4 } from "uuid";
 
 interface SearchProviderProps {
     children: React.ReactNode;
@@ -20,6 +21,7 @@ interface ISearchContext {
     setSearchKeyword: React.Dispatch<React.SetStateAction<string>>;
     setShowResults: React.Dispatch<React.SetStateAction<boolean>>;
     removeSuggestionKeywordHistorys: (_id: string) => void;
+    addSuggestionKeywordHistorys: (keyword: string) => void;
 }
 
 interface ISearchSuggestionKeywords {
@@ -83,6 +85,31 @@ const SearchProvider: React.FC<SearchProviderProps> = ({ children }) => {
         );
     };
 
+    const addSuggestionKeywordHistorys = (keyword: string) => {
+        let newSuggestionKeywordHistories;
+        if (suggestionKeywordHistorys.length > 10) {
+            suggestionKeywordHistorys.pop();
+            newSuggestionKeywordHistories = suggestionKeywordHistorys;
+        } else {
+            newSuggestionKeywordHistories = suggestionKeywordHistorys;
+        }
+
+        newSuggestionKeywordHistories = newSuggestionKeywordHistories.filter(
+            (item) => item.keyword !== keyword
+        );
+
+        newSuggestionKeywordHistories.unshift({
+            _id: uuidv4(),
+            keyword: keyword,
+        });
+
+        setSuggestionKeywordHistories(newSuggestionKeywordHistories);
+        localStorage.setItem(
+            "search-history",
+            JSON.stringify(newSuggestionKeywordHistories)
+        );
+    };
+
     const values = {
         suggestionKeywordHistorys,
         suggestionKeywords,
@@ -93,6 +120,7 @@ const SearchProvider: React.FC<SearchProviderProps> = ({ children }) => {
         setSuggestionKeywords,
         setSuggestionKeywordHistories,
         removeSuggestionKeywordHistorys,
+        addSuggestionKeywordHistorys,
     };
 
     return (

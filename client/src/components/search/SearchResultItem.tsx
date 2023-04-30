@@ -2,6 +2,7 @@ import React from "react";
 import SearchRoundedIcon from "@mui/icons-material/SearchRounded";
 import RestoreRoundedIcon from "@mui/icons-material/RestoreRounded";
 import { useSearch } from "../../context/SearchContext";
+import { useNavigate } from "react-router-dom";
 interface ISearchResultItem {
     keyword: string;
     onClick: () => void;
@@ -14,6 +15,17 @@ const SearchResultItem: React.FC<ISearchResultItem> = ({
     _id,
 }) => {
     const search = useSearch();
+    const navigation = useNavigate();
+
+    const handleClick = () => {
+        if (isHistory) {
+            navigation(`/results?q=${encodeURIComponent(keyword)}`);
+        } else {
+            search?.addSuggestionKeywordHistorys(keyword);
+            navigation(`/results?q=${encodeURIComponent(keyword)}`);
+        }
+    };
+
     return (
         <div className="px-3 py-2 hover:bg-gray-200 cursor-pointer font-medium flex justify-start gap-2 items-center">
             <span className="text-gray-500">
@@ -23,7 +35,10 @@ const SearchResultItem: React.FC<ISearchResultItem> = ({
                     <SearchRoundedIcon fontSize="small" />
                 )}
             </span>
-            <span className="text-ellipsis whitespace-nowrap overflow-hidden w-full">
+            <span
+                onClick={handleClick}
+                className="text-ellipsis whitespace-nowrap overflow-hidden w-full"
+            >
                 {keyword}
             </span>
             {isHistory && (
