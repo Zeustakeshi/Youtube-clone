@@ -1,7 +1,7 @@
 import React, { forwardRef, ForwardRefRenderFunction, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useSearch } from "../../context/SearchContext";
-import useClickOutSide from "../search2/useClickOutsite";
+import useClickOutSide from "../../hooks/useClickOutsite";
 import SearchResultItem from "./SearchResultItem";
 
 interface ISearchResultProps {}

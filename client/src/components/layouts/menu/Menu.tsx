@@ -32,7 +32,7 @@ const Menu: React.FC = ({}) => {
                         return {
                             Icon: <Avatar src={item.avatar} size={28} />,
                             label: item.username,
-                            to: "/",
+                            to: "/a",
                         };
                     })
                 );
@@ -48,7 +48,7 @@ const Menu: React.FC = ({}) => {
         >
             <MenuGroup items={menuItemsMini}></MenuGroup>
 
-            {!user._id && app.menuSize === "large" && (
+            {!document.cookie && app.menuSize === "large" && (
                 <div className="w-full flex flex-col justify-center items-center py-4 border-b border-b-gray-200 ">
                     <div className="text-sm mb-2">
                         Đăng nhập để thích video, bình luận và đăng ký
@@ -56,12 +56,14 @@ const Menu: React.FC = ({}) => {
                     <ButtonLogin></ButtonLogin>
                 </div>
             )}
-            {user._id && <MenuGroup items={menuItems} hidden></MenuGroup>}
-            {user._id && subscripeChannels.length && (
+            {document.cookie && (
+                <MenuGroup items={menuItems} hidden></MenuGroup>
+            )}
+            {document.cookie && subscripeChannels.length > 0 && (
                 <MenuGroup
                     items={subscripeChannels}
                     hidden
-                    name={user._id ? "Kênh đăng ký" : ""}
+                    name={document.cookie ? "Kênh đăng ký" : ""}
                     maxItem={4}
                 />
             )}

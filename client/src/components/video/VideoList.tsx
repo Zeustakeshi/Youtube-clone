@@ -5,7 +5,12 @@ import { API_URL } from "../../utils/const";
 import VideoItem from "./VideoItem";
 import InfiniteScroll from "react-infinite-scroll-component";
 
-const VideoList = () => {
+interface IVideoList {
+    url: string;
+    params?: any;
+}
+
+const VideoList: React.FC<IVideoList> = ({ url, params }) => {
     const [videos, setVideos] = useState<IVideo[]>([]);
     const firstFetching = useRef<boolean>(true);
     const [page, setPage] = useState({
@@ -15,27 +20,38 @@ const VideoList = () => {
     });
     const fetchVideos = async () => {
         try {
-            const { data }: { data: IVideoResponse } = await axios({
+            const { data }: { data: IVideoResponse | any } = await axios({
                 method: "GET",
-                url: API_URL + `/video`,
+                url: API_URL + url,
+                headers: {
+                    authorization: `Bearer ${document.cookie.split("=")[1]}`,
+                },
                 params: {
                     page: page.currentPage,
                     limit: 10,
+                    ...params,
                 },
                 withCredentials: true,
             });
+
             setVideos((prev) => [...prev, ...data.videos]);
+
             setPage((prev) => {
                 return {
-                    pageCount: data.pageCount,
+                    pageCount: data.pageCount || 1,
                     currentPage: prev.currentPage + 1,
-                    itemCount: data.itemCount,
+                    itemCount: data.itemCount || 1,
                 };
             });
         } catch (error) {
             console.error(error);
         }
     };
+
+    // useEffect(() => {
+    //     if (!firstFetching.current) {
+    //     }
+    // }, [params]);
 
     useEffect(() => {
         if (firstFetching.current) {

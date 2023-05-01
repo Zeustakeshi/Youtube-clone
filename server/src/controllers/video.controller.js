@@ -106,12 +106,14 @@ export const deleteVideo = async (req, res) => {
 export const getVideo = async (req, res) => {
     const page = parseInt(req.query.page) || 1;
     const limit = parseInt(req.query.limit) || 10;
-    const tags = req.query.tags?.split(",");
+    const tags = req.query.tags
+        ?.split(",")
+        .map((item) => nonAccentVietnamese(item));
     const skip = (page - 1) * limit;
 
     try {
         if (tags) {
-            const videos = await videoService.getVideoByTags(tags, skip);
+            const videos = await videoService.getVideoByTags(tags, skip, limit);
             return res.status(200).json(videos);
         } else {
             const videos = await videoService.getVideoLimit(skip, limit);
@@ -147,11 +149,14 @@ export const getVideoByID = async (req, res) => {
 
 export const getSubscribedVideo = async (req, res) => {
     const userID = req.userID;
+    const page = parseInt(req.query.page) || 1;
+    const limit = parseInt(req.query.limit) || 10;
+    const skip = (page - 1) * limit;
     try {
         const subscribedUsers = await userService.getSubscribedUsers(userID);
-        const limit = subscribedUsers.length >= 10 ? 10 : 20;
         const videos = await videoService.getSubscribedVideo(
             subscribedUsers,
+            skip,
             limit
         );
         return res.status(200).json(videos);

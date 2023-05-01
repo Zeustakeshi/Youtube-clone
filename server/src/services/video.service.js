@@ -82,6 +82,36 @@ class VideoService {
         return { videos, itemCount, pageCount };
     }
 
+    async getVideoByTags(tags, skip = 0, limit) {
+        const videos = await VideoModel.find({ tags: { $in: tags } })
+            .limit(limit)
+            .skip(skip)
+            .sort({ createdAt: -1 });
+        const itemCount = await VideoModel.countDocuments({
+            tags: { $in: tags },
+        });
+        const pageCount = Math.ceil(itemCount / limit);
+        return { videos, itemCount, pageCount };
+    }
+
+    async getSubscribedVideo(subscribedUsers, skip = 0, limit = 5) {
+        let itemCount = 0;
+
+        const videos = await Promise.all(
+            subscribedUsers.map(async (channelID) => {
+                itemCount += await VideoModel.countDocuments({
+                    userID: channelID,
+                });
+                return VideoModel.find({ userID: channelID })
+                    .sort({ createdAt: -1 })
+                    .limit(limit)
+                    .skip(skip);
+            })
+        );
+        const pageCount = Math.ceil(itemCount / limit);
+        return { videos: videos.flat(2), itemCount, pageCount };
+    }
+
     async getTrendVideo(skip = 0, limit = 20) {
         const videos = await VideoModel.find()
             .limit(limit)
@@ -94,27 +124,8 @@ class VideoService {
         return { videos, itemCount, pageCount };
     }
 
-    async getSubscribedVideo(subscribedUsers, limit = 5) {
-        const videos = await Promise.all(
-            subscribedUsers.map((channelID) => {
-                return VideoModel.find({ userID: channelID })
-                    .sort({ createdAt: -1 })
-                    .limit(limit);
-            })
-        );
-        return videos.flat();
-    }
-
     async getVideoByChannelID(userID, skip = 0, limit = 10) {
         const videos = await VideoModel.find({ userID: userID })
-            .limit(limit)
-            .skip(skip)
-            .sort({ createdAt: -1 });
-        return videos;
-    }
-
-    async getVideoByTags(tags, skip = 0, limit) {
-        const videos = await VideoModel.find({ tags: { $in: tags } })
             .limit(limit)
             .skip(skip)
             .sort({ createdAt: -1 });

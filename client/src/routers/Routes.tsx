@@ -5,6 +5,10 @@ import HomePage from "../pages/HomePage";
 import AuthPage from "../pages/AuthPage";
 import VideoPage from "../pages/VideoPage";
 import ResultPage from "../pages/ResultPage";
+import SubscriptionPage from "../pages/SubscriptionPage";
+import LibraryPage from "../pages/LibraryPage";
+import TrendingPage from "../pages/TrendingPage";
+import HistoryPage from "../pages/HistoryPage";
 
 const Router = createBrowserRouter([
     {
@@ -14,6 +18,22 @@ const Router = createBrowserRouter([
             {
                 path: "/",
                 element: <HomePage></HomePage>,
+            },
+            {
+                path: "/subscriptions",
+                element: <SubscriptionPage></SubscriptionPage>,
+            },
+            {
+                path: "/library",
+                element: <LibraryPage></LibraryPage>,
+            },
+            {
+                path: "/trending",
+                element: <TrendingPage></TrendingPage>,
+            },
+            {
+                path: "/history",
+                element: <HistoryPage></HistoryPage>,
             },
             {
                 path: "/video/:id",

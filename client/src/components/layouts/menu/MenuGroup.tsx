@@ -39,7 +39,7 @@ const MenuGroup: React.FC<IMenuGroup> = ({
             <div
                 className={`w-full flex flex-col justify-start ${
                     menuSize === "large" ? "item-start" : "items-center"
-                } gap-0 `}
+                } gap-1 `}
             >
                 {children
                     ? children
