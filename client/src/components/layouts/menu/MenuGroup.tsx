@@ -13,12 +13,13 @@ const MenuGroup: React.FC<IMenuGroup> = ({
     showMoreLabel = "Thêm",
     children,
 }) => {
-    const [menuItems, setMenuItems] = useState<IMenuItem[]>(() =>
-        items.slice(0, maxItem)
+    const [menuItems, setMenuItems] = useState<IMenuItem[]>(
+        () => items.slice(0, maxItem) || []
     );
     const { menuSize } = useSelector((state: RootState) => state.app);
 
     const handleToggleLoadMore = (e: any) => {
+        console.log(items.length !== menuItems.length);
         e.stopPropagation();
         if (items.length !== menuItems.length) {
             setMenuItems(items);
@@ -54,7 +55,7 @@ const MenuGroup: React.FC<IMenuGroup> = ({
                           );
                       })}
             </div>
-            {!children && items.length >= maxItem && (
+            {!children && items.length > maxItem && (
                 <button
                     onClick={handleToggleLoadMore}
                     className="flex justify-between items-center mx-auto text-sm text-slate-500 p-2 w-full"

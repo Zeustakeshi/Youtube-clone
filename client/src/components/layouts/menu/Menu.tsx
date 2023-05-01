@@ -1,16 +1,47 @@
+import axios from "axios";
+import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
+import { IMenuItem } from "../../../interfaces/Menu.interface";
 import { RootState } from "../../../redux/store";
+import { API_URL } from "../../../utils/const";
+import Avatar from "../../avatar/Avatar";
 import ButtonLogin from "../../button/ButtonLogin";
-import {
-    discoverItems,
-    fakeSubscripeChannels,
-    menuItems,
-    menuItemsMini,
-} from "./menuData";
+import { discoverItems, menuItems, menuItemsMini } from "./menuData";
 import MenuGroup from "./MenuGroup";
 
 const Menu: React.FC = ({}) => {
     const { user, app } = useSelector((state: RootState) => state);
+    const [subscripeChannels, setSubscripeChannels] = useState<IMenuItem[]>([]);
+
+    useEffect(() => {
+        if (!user.subscribedUsers.length) return;
+        (async () => {
+            try {
+                const subscribedUsers = await Promise.all(
+                    user.subscribedUsers.map(async (subscribedUser) => {
+                        const res = await axios({
+                            method: "GET",
+                            url: API_URL + `/user/${subscribedUser}`,
+                            withCredentials: true,
+                        });
+                        return res.data;
+                    })
+                );
+                setSubscripeChannels(
+                    subscribedUsers.map((item) => {
+                        return {
+                            Icon: <Avatar src={item.avatar} size={28} />,
+                            label: item.username,
+                            to: "/",
+                        };
+                    })
+                );
+            } catch (error) {
+                console.log(error);
+            }
+        })();
+    }, [user.subscribedUsers]);
+
     return (
         <div
             className={`sticky h-[calc(100vh-80px)] max-w-[200px] top-[80px] flex flex-col justify-start items-start overflow-auto min-w-min  hiden-scrollbar px-2`}
@@ -26,13 +57,13 @@ const Menu: React.FC = ({}) => {
                 </div>
             )}
             {user._id && <MenuGroup items={menuItems} hidden></MenuGroup>}
-            {user._id && (
+            {user._id && subscripeChannels.length && (
                 <MenuGroup
-                    items={fakeSubscripeChannels}
+                    items={subscripeChannels}
                     hidden
                     name={user._id ? "Kênh đăng ký" : ""}
-                    maxItem={3}
-                ></MenuGroup>
+                    maxItem={4}
+                />
             )}
 
             <MenuGroup

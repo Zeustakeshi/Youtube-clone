@@ -46,10 +46,10 @@ const VideoList = () => {
 
     return (
         <InfiniteScroll
-            className="p-4 flex flex-wrap gap-3 mx-auto justify-center"
+            className="p-4 flex flex-wrap gap-3 mx-auto justify-center min-h-screen"
             dataLength={videos.length}
             next={() => {
-                !firstFetching.current && fetchVideos();
+                fetchVideos();
             }}
             hasMore={page.currentPage <= page.pageCount}
             loader={new Array(20).fill(0).map((video, index: number) => {

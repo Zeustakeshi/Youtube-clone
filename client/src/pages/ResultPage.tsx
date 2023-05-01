@@ -12,7 +12,6 @@ const ResultPage = () => {
 
     const dispatch = useDispatch();
     const query = useSearchParams()[0].get("q");
-    const isFirstTime = useRef(true);
 
     useEffect(() => {
         dispatch(updateMenuStatus("show"));

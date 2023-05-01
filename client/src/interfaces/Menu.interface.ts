@@ -12,6 +12,6 @@ export interface IMenuGroup {
 export interface IMenuItem {
     isOpen?: boolean;
     Icon: React.ReactNode;
-    label: string;
+    label?: string;
     to?: string;
 }
