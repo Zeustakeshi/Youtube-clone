@@ -2,6 +2,7 @@ import userService from "../services/user.service.js";
 import videoService from "../services/video.service.js";
 import searchService from "../services/search.service.js";
 import { nonAccentVietnamese } from "../utils/nonAccentVietnamese.js";
+import { calculateKeywordSimilarity } from "../utils/generateKeywordSuggestions.js";
 export const addNew = async (req, res) => {
     const userID = req.userID;
     const { title, thumbnailURL, youtubeID, tags } = req.body;
@@ -11,16 +12,33 @@ export const addNew = async (req, res) => {
     const searchKeyword = nonAccentVietnamese(title);
     const searchTags = tags?.map((tag) => nonAccentVietnamese(tag)) || [];
     try {
+        const videoSimilars = await searchService.getSuggestionKeywords(
+            searchKeyword
+        );
         const newVideo = await videoService.addNew({
             userID,
             title,
             thumbnailURL,
             youtubeID,
             tags: [searchKeyword, ...searchTags],
+            similars: videoSimilars,
         });
-        await searchService.createNewSearchKeyWord(
-            nonAccentVietnamese(newVideo.title)
+
+        const videoKeyword = await searchService.createNewSearchKeyWord(
+            searchKeyword
         );
+        await videoService.findAndUpdateAllSimilars(
+            videoSimilars.map((item) => item.keyword),
+            {
+                _id: videoKeyword._id,
+                keyword: videoKeyword.keyword,
+                similarity: calculateKeywordSimilarity(
+                    videoKeyword.keyword,
+                    searchKeyword
+                ),
+            }
+        );
+
         return res.status(200).json(newVideo);
     } catch (error) {
         return res.status(500).json(error.message);

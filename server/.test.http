@@ -1,8 +1,13 @@
-### ADD SEARCH KEYWORD
-POST http://localhost:4000/api/search/video/insert
-authorization : Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NDQzN2M5M2NiZmUwYzI0MmMwZjFjYmEiLCJpYXQiOjE2ODIxNTEyNTF9.upFvpvg8fABsJ89WwwS4e-QLBv8am7GYP8stuRkIi9E
+
+
+### NEW VIDEO
+POST  http://localhost:4000/api/video/
+authorization : Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NDQzN2M5ZmNiZmUwYzI0MmMwZjFjYmMiLCJpYXQiOjE2ODI4NzIyNDN9.8FfQY8Buq3cyHpjUwvhuAMF7veeCkI7rXExmAYjNM9w
 Content-Type: application/json
 
 {
-   "title": "Full Stack Airbnb Clone with Next.js 13 App Router: React, Tailwind, Prisma, MongoDB, NextAuth 2023"
+   "title": "[S6] Tuyển Tập Doraemon - Phần 38 -Danh Sách Gặp Gỡ Của Nobita, Pháo Đài Vô Địch Của Suneo",
+   "thumbnailURL": "https://i.ytimg.com/vi/VOpCTyKgXNQ/hq720.jpg?sqp=-oaymwEcCNAFEJQDSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLDt4y05Y-MzuuXJl-Iljsx6xiEKVA", 
+   "youtubeID" :"VOpCTyKgXNQ",
+   "tags": ["Doraemon",  "pops kids", "anime"]
 }

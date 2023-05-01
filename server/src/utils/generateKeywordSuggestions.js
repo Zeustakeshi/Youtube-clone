@@ -6,7 +6,7 @@ export default function generateKeywordSuggestions(keyword, availableKeywords) {
             availableKeyword.keyword
         );
 
-        if (similarity >= 0.14) {
+        if (similarity >= 0.3) {
             suggestions.push({
                 _id: availableKeyword._id,
                 keyword: availableKeyword.keyword,
@@ -18,7 +18,7 @@ export default function generateKeywordSuggestions(keyword, availableKeywords) {
     return suggestions;
 }
 
-function calculateKeywordSimilarity(keyword1, keyword2) {
+export function calculateKeywordSimilarity(keyword1, keyword2) {
     const distance = levenshteinDistance(keyword1, keyword2);
     const maxLength = Math.max(keyword1.length, keyword2.length);
     const similarity = 1 - distance / maxLength;

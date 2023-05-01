@@ -15,10 +15,6 @@ const VideoSchema = new Schema(
             type: String,
             required: true,
         },
-        // videoURL: {
-        //     type: String,
-        //     required: true,
-        // },
         youtubeID: {
             type: String,
             required: true,
@@ -34,6 +30,17 @@ const VideoSchema = new Schema(
         tags: {
             type: [String],
             default: [],
+        },
+        similars: {
+            type: [
+                {
+                    _id: String,
+                    keyword: String,
+                    similarity: Number,
+                },
+            ],
+            default: [],
+            unique: true,
         },
     },
     { timestamps: true }

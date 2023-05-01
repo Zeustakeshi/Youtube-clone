@@ -1,5 +1,11 @@
 import { AuthorType } from "./User.interface";
 
+export interface IVideoSimilar {
+    _id: string;
+    keyword: string;
+    similarity: number;
+}
+
 export interface IVideo {
     _id: string | number | null;
     title: string;
@@ -13,6 +19,7 @@ export interface IVideo {
     createdAt: string;
     updatedAt: string;
     author?: AuthorType;
+    similars: IVideoSimilar[];
 }
 
 export interface IVideoState {

@@ -5,10 +5,6 @@ import { API_URL } from "../../utils/const";
 import VideoItem from "./VideoItem";
 import InfiniteScroll from "react-infinite-scroll-component";
 
-interface IVideoListProps {
-    videos: IVideo[];
-}
-
 const VideoList = () => {
     const [videos, setVideos] = useState<IVideo[]>([]);
     const firstFetching = useRef<boolean>(true);
@@ -56,7 +52,7 @@ const VideoList = () => {
                 !firstFetching.current && fetchVideos();
             }}
             hasMore={page.currentPage <= page.pageCount}
-            loader={new Array(20).fill(0).map((video, index) => {
+            loader={new Array(20).fill(0).map((video, index: number) => {
                 return <VideoItem key={index}></VideoItem>;
             })}
         >

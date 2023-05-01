@@ -7,6 +7,7 @@ class SearchService {
     async createNewSearchKeyWord(keyword) {
         const newSearchKeyWord = new SearchKeywordModel({ keyword: keyword });
         newSearchKeyWord.save();
+        return newSearchKeyWord;
     }
 
     async searchVideo(searchKeywords, limit = 20) {
@@ -16,9 +17,9 @@ class SearchService {
         return videos;
     }
 
-    async getSuggestionKeywords(searchKeyword) {
+    async getSuggestionKeywords(keyword) {
         const keywords = await SearchKeywordModel.find({});
-        const resluts = generateKeywordSuggestions(searchKeyword, keywords);
+        const resluts = generateKeywordSuggestions(keyword, keywords);
         return resluts.sort((a, b) => b.similarity - a.similarity).slice(0, 10);
     }
 }

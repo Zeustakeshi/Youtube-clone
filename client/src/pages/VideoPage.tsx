@@ -7,7 +7,7 @@ import { useLocation } from "react-router-dom";
 import Avatar from "../components/avatar/Avatar";
 import ButtonLike from "../components/button/ButtonLike";
 import ButtonSubscribe from "../components/button/ButtonSubscribe";
-import RelatedVideo from "../components/video/RelatedVideo";
+import SimilarVideo from "../components/video/SimilarVideo";
 import Video from "../components/video/Video";
 import VideoComment from "../components/video/VideoComment";
 import VideoDescription from "../components/video/VideoDescription";
@@ -20,7 +20,6 @@ const VideoPage = () => {
     const dispatch = useDispatch();
     const { video }: { video: IVideo } = useLocation().state;
     const user = useSelector((state: RootState) => state.user);
-
     useEffect(() => {
         document.title = video.title;
     }, [video.title]);
@@ -52,7 +51,7 @@ const VideoPage = () => {
 
     return (
         <div className="mx-auto flex items-start justify-center w-[1780px]  p-3 py-4 gap-10">
-            <div className="max-w-[1280px]">
+            <div className="max-w-[1280px] mx-auto">
                 <Video youtubeID={video.youtubeID} title={video.title}></Video>
                 <div className="my-3">
                     <h3 className="my-2 text-lg font-semibold">
@@ -117,9 +116,8 @@ const VideoPage = () => {
                     <VideoComment videoID={video._id}></VideoComment>
                 )}
             </div>
-            <div className="min-w-[350px]">
-                <RelatedVideo></RelatedVideo>
-            </div>
+
+            <SimilarVideo similars={video.similars}></SimilarVideo>
         </div>
     );
 };

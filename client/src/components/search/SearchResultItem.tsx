@@ -24,6 +24,7 @@ const SearchResultItem: React.FC<ISearchResultItem> = ({
             search?.addSuggestionKeywordHistorys(keyword);
             navigation(`/results?q=${encodeURIComponent(keyword)}`);
         }
+        search?.setShowResults(false);
     };
 
     return (

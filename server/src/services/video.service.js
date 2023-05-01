@@ -19,6 +19,18 @@ class VideoService {
         return video;
     }
 
+    async findAndUpdateAllSimilars(similars, videoKeyword) {
+        const video = await VideoModel.updateMany(
+            { tags: { $in: similars } },
+            {
+                $push: {
+                    similars: videoKeyword,
+                },
+            }
+        );
+        if (!video) throw new Error("Video not found!");
+    }
+
     async like(userID, videoID) {
         const video = await VideoModel.findById(videoID, { likes: 1 });
         if (!video) throw new Error("Video not found!");
@@ -43,6 +55,12 @@ class VideoService {
 
     async getVideoByID(videoID) {
         const video = await VideoModel.findById(videoID);
+        if (!video) throw new Error("Video not found");
+        return video;
+    }
+
+    async getVideoByTitle(title) {
+        const video = await VideoModel.findOne({ title: title });
         if (!video) throw new Error("Video not found");
         return video;
     }
