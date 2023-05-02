@@ -2,10 +2,13 @@ import KeyboardArrowDownOutlinedIcon from "@mui/icons-material/KeyboardArrowDown
 import KeyboardArrowUpOutlinedIcon from "@mui/icons-material/KeyboardArrowUpOutlined";
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
-import { IMenuGroup, IMenuItem } from "../../../interfaces/Menu.interface";
+import {
+    ICollapsedMenuGroup,
+    ICollapsedMenuItem,
+} from "../../../interfaces/Menu.interface";
 import { RootState } from "../../../redux/store";
 import MenuItem from "./MenuItem";
-const MenuGroup: React.FC<IMenuGroup> = ({
+const MenuGroup: React.FC<ICollapsedMenuGroup> = ({
     items,
     hidden,
     name,
@@ -13,7 +16,7 @@ const MenuGroup: React.FC<IMenuGroup> = ({
     showMoreLabel = "Thêm",
     children,
 }) => {
-    const [menuItems, setMenuItems] = useState<IMenuItem[]>(
+    const [menuItems, setMenuItems] = useState<ICollapsedMenuItem[]>(
         () => items.slice(0, maxItem) || []
     );
     const { menuSize } = useSelector((state: RootState) => state.app);

@@ -1,9 +1,12 @@
 import React from "react";
 import NotificationsOutlinedIcon from "@mui/icons-material/NotificationsOutlined";
+import { Tooltip } from "@mui/material";
 const Notification = () => {
     return (
         <div className="p-2 cursor-pointer">
-            <NotificationsOutlinedIcon></NotificationsOutlinedIcon>
+            <Tooltip title="Thông báo">
+                <NotificationsOutlinedIcon></NotificationsOutlinedIcon>
+            </Tooltip>
         </div>
     );
 };

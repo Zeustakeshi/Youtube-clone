@@ -8,9 +8,9 @@ import SmartDisplayOutlinedIcon from "@mui/icons-material/SmartDisplayOutlined";
 import SportsEsportsOutlinedIcon from "@mui/icons-material/SportsEsportsOutlined";
 import SubscriptionsOutlinedIcon from "@mui/icons-material/SubscriptionsOutlined";
 import VideoLibraryOutlinedIcon from "@mui/icons-material/VideoLibraryOutlined";
-import { IMenuItem } from "../../../interfaces/Menu.interface";
+import { ICollapsedMenuItem } from "../../../interfaces/Menu.interface";
 import Avatar from "../../avatar/Avatar";
-export const menuItemsMini: IMenuItem[] = [
+export const menuItemsMini: ICollapsedMenuItem[] = [
     {
         Icon: <HomeOutlinedIcon fontSize="small" />,
         label: "Trang chủ",
@@ -33,7 +33,7 @@ export const menuItemsMini: IMenuItem[] = [
     },
 ];
 
-export const menuItems: IMenuItem[] = [
+export const menuItems: ICollapsedMenuItem[] = [
     {
         Icon: <HistoryOutlinedIcon fontSize="small" />,
         label: "Video đã xem",
@@ -46,7 +46,7 @@ export const menuItems: IMenuItem[] = [
     },
 ];
 
-export const discoverItems: IMenuItem[] = [
+export const discoverItems: ICollapsedMenuItem[] = [
     {
         Icon: <LocalFireDepartmentOutlinedIcon fontSize="small" />,
         label: "Thịnh hành",

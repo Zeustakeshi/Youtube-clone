@@ -132,7 +132,7 @@ const SearchProvider: React.FC<SearchProviderProps> = ({ children }) => {
 
 const useSearch = () => {
     const context = useContext(SearchContext);
-    if (typeof context === "undefined")
+    if (typeof context === "undefined" || !context)
         throw new Error("useSearch must be used within SearchProvider");
     return context;
 };

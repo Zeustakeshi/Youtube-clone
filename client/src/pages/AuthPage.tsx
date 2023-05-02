@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { updateMenuStatus } from "../redux/slices/app/appSlice";
 import { login, register } from "../redux/slices/user/userSlice";
 import { RootState } from "../redux/store";
-
+import { toast, ToastContainer } from "react-toastify";
 const AuthPage = () => {
     const dispatch = useDispatch();
 
@@ -13,6 +13,7 @@ const AuthPage = () => {
     }, []);
     return (
         <div className="flex justify-center items-center w-full h-[calc(100vh-80px)]">
+            <ToastContainer />
             <div className="flex flex-col justify-center items-center gap-2  rounded-md bg-white shadow-xl p-4 py-6 w-[500px] min-h-[500px]">
                 <h3 className="text-2xl font-semibold ">Đăng nhập</h3>
                 <LoginFrom></LoginFrom>
@@ -39,7 +40,10 @@ const LoginFrom = () => {
 
     const handleLogin = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        if (!email.trim() || !password.trim()) return;
+        if (!email.trim() || !password.trim()) {
+            toast("Vui lòng điền đủ thông tin đăng nhập");
+            return;
+        }
         dispatch(
             login({
                 email: email,
@@ -88,7 +92,10 @@ const RegisterForm = () => {
 
     const handleRegister = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        if (!userName.trim() || !email.trim() || !password.trim()) return;
+        if (!userName.trim() || !email.trim() || !password.trim()) {
+            toast("Vui lòng điền đầy đủ thông tin");
+            return;
+        }
         dispatch(
             register({
                 userName,

@@ -1,14 +1,76 @@
-import React, { useEffect, useRef, useState } from "react";
 import AddIcon from "@mui/icons-material/Add";
 import CloseOutlinedIcon from "@mui/icons-material/CloseOutlined";
+import axios from "axios";
+import React, { useEffect, useRef, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { API_URL } from "../../utils/const";
+
 const UploadVideo = () => {
     const [title, setTitle] = useState("");
     const [thumbnailURL, setThumbnailURL] = useState("");
     const [youtubeID, setYoutubeID] = useState("");
     const [tags, setTags] = useState<string[]>([]);
+    const navigation = useNavigate();
+    useEffect(() => {
+        if (!document.cookie) {
+            navigation("/auth");
+        }
+    }, [document.cookie]);
+
+    const handleCreateNewVideo = async () => {
+        if (!document.cookie) {
+            toast("Vui lòng đăng nhập để thực hiện hành động này");
+            return;
+        }
+        if (
+            !tags.length ||
+            !title.trim() ||
+            !thumbnailURL.trim() ||
+            !youtubeID.trim()
+        ) {
+            toast("Vui lòng điền đầy đủ thông tin");
+            return;
+        }
+
+        const createNewVideo = async () => {
+            await axios({
+                method: "POST",
+                url: API_URL + `/video`,
+                headers: {
+                    authorization: `Bearer ${document.cookie.split("=")[1]}`,
+                },
+                data: {
+                    title: title,
+                    thumbnailURL: thumbnailURL,
+                    youtubeID: youtubeID,
+                    tags: tags,
+                },
+                withCredentials: true,
+            });
+        };
+        await toast.promise(createNewVideo(), {
+            pending: "Đang tạo mới video....",
+            success: "Video được đăng tải thành công!",
+            error: "Đã có lỗi xảy ra trong quá trình tải lên, vui lòng thử lại sau.",
+        });
+    };
 
     return (
         <div className="p-4 pt-0 max-w-[850px]">
+            <ToastContainer
+                position="top-right"
+                autoClose={2000}
+                hideProgressBar={false}
+                newestOnTop={false}
+                closeOnClick
+                rtl={false}
+                pauseOnFocusLoss
+                draggable
+                pauseOnHover
+                theme="light"
+            />
             <h4 className="mb-4 text-center font-medium text-xl">
                 Tạo video mới
             </h4>
@@ -21,6 +83,8 @@ const UploadVideo = () => {
                         Tên video
                     </label>
                     <input
+                        value={title}
+                        onChange={(e) => setTitle(e.target.value)}
                         className="w-full outline-blue-500 border border-slate-400 px-5 py-3 rounded-md"
                         type="text"
                         id="ip-video-title"
@@ -37,6 +101,8 @@ const UploadVideo = () => {
                             Địa chỉ ảnh bìa
                         </label>
                         <input
+                            value={thumbnailURL}
+                            onChange={(e) => setThumbnailURL(e.target.value)}
                             className="w-full outline-blue-500 border border-slate-400 px-5 py-3 rounded-md"
                             type="text"
                             id="ip-video-thumbnail"
@@ -52,6 +118,8 @@ const UploadVideo = () => {
                             Youtube ID
                         </label>
                         <input
+                            value={youtubeID}
+                            onChange={(e) => setYoutubeID(e.target.value)}
                             className="w-full outline-blue-500 border border-slate-400 px-5 py-3 rounded-md"
                             type="text"
                             id="ip-video-youtube-id"
@@ -62,6 +130,7 @@ const UploadVideo = () => {
                 </div>
                 <InputTags tags={tags} setTags={setTags}></InputTags>
                 <button
+                    onClick={handleCreateNewVideo}
                     type="submit"
                     className="mt-5 px-5 py-3 rounded-md bg-blue-500 text-white text-lg font-medium"
                 >

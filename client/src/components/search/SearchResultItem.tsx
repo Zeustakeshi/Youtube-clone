@@ -28,7 +28,7 @@ const SearchResultItem: React.FC<ISearchResultItem> = ({
     };
 
     return (
-        <div className="px-3 py-2 hover:bg-gray-200 cursor-pointer font-medium flex justify-start gap-2 items-center">
+        <div className="px-3  hover:bg-gray-200 cursor-pointer font-medium flex justify-start gap-2 items-center">
             <span className="text-gray-500">
                 {isHistory ? (
                     <RestoreRoundedIcon fontSize="small" />
@@ -38,7 +38,7 @@ const SearchResultItem: React.FC<ISearchResultItem> = ({
             </span>
             <span
                 onClick={handleClick}
-                className="text-ellipsis whitespace-nowrap overflow-hidden w-full"
+                className="text-ellipsis whitespace-nowrap overflow-hidden w-full py-2"
             >
                 {keyword}
             </span>

@@ -3,15 +3,19 @@ import VideoCallOutlinedIcon from "@mui/icons-material/VideoCallOutlined";
 import Modal from "../modal/Modal";
 import CloseOutlinedIcon from "@mui/icons-material/CloseOutlined";
 import UploadVideo from "../upload/UploadVideo";
+import { Tooltip } from "@mui/material";
 const ButtonCreateNewVideo = () => {
     const [showModal, setShowModal] = useState(false);
+
     return (
         <>
             <div
                 onClick={() => setShowModal(true)}
                 className="p-2 cursor-pointer"
             >
-                <VideoCallOutlinedIcon></VideoCallOutlinedIcon>
+                <Tooltip title="Tạo mới">
+                    <VideoCallOutlinedIcon></VideoCallOutlinedIcon>
+                </Tooltip>
             </div>
             <Modal isOpen={showModal} onClose={() => setShowModal(false)}>
                 <div className="bg-white shadow-md rounded-md min-w-[300px] min-h-[200px]">

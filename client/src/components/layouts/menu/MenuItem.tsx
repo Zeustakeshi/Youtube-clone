@@ -1,9 +1,13 @@
-import { Label } from "@mui/icons-material";
 import React from "react";
 import { NavLink } from "react-router-dom";
-import { IMenuItem } from "../../../interfaces/Menu.interface";
+import { ICollapsedMenuItem } from "../../../interfaces/Menu.interface";
 
-const MenuItem: React.FC<IMenuItem> = ({ Icon, label, to = "/", isOpen }) => {
+const MenuItem: React.FC<ICollapsedMenuItem> = ({
+    Icon,
+    label,
+    to = "/",
+    isOpen,
+}) => {
     return (
         <NavLink
             to={to}

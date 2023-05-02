@@ -1,7 +1,10 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { IMenuItem } from "../../../interfaces/Menu.interface";
+import {
+    ICollapsedMenuGroup,
+    ICollapsedMenuItem,
+} from "../../../interfaces/Menu.interface";
 import { RootState } from "../../../redux/store";
 import { API_URL } from "../../../utils/const";
 import Avatar from "../../avatar/Avatar";
@@ -11,7 +14,9 @@ import MenuGroup from "./MenuGroup";
 
 const Menu: React.FC = ({}) => {
     const { user, app } = useSelector((state: RootState) => state);
-    const [subscripeChannels, setSubscripeChannels] = useState<IMenuItem[]>([]);
+    const [subscripeChannels, setSubscripeChannels] = useState<
+        ICollapsedMenuItem[]
+    >([]);
 
     useEffect(() => {
         if (!user.subscribedUsers.length) return;

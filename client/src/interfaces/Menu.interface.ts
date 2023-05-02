@@ -1,17 +1,30 @@
 import React from "react";
 
-export interface IMenuGroup {
+export interface ICollapsedMenuGroup {
     name?: string;
-    items: IMenuItem[];
+    items: ICollapsedMenuItem[];
     hidden?: boolean;
     maxItem?: number;
     showMoreLabel?: string;
     children?: React.ReactNode;
 }
 
-export interface IMenuItem {
+export interface ICollapsedMenuItem {
     isOpen?: boolean;
     Icon: React.ReactNode;
     label?: string;
     to?: string;
+}
+
+export interface IMenuItem {
+    type?: string;
+    title: string;
+    children?: IMenuData;
+    to?: string;
+    icon?: React.ReactNode;
+}
+
+export interface IMenuData {
+    header: React.ReactNode;
+    data: IMenuItem[];
 }

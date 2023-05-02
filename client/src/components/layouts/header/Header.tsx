@@ -1,16 +1,10 @@
-import MoreVertOutlinedIcon from "@mui/icons-material/MoreVertOutlined";
-import React from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { SearchProvider } from "../../../context/SearchContext";
 import { toggleMenu } from "../../../redux/slices/app/appSlice";
-import { RootState } from "../../../redux/store";
-import Avatar from "../../avatar/Avatar";
-import ButtonCreateNewVideo from "../../button/ButtonCreateNewVideo";
-import ButtonLogin from "../../button/ButtonLogin";
 import ButtonToggleMenu from "../../button/ButtonToggleMenu";
 import Logo from "../../Logo/Logo";
-import Notification from "../../notification/Notification";
 import Search from "../../search/Search";
+import HearderAction from "./HearderAction";
 const Header = () => {
     const dispatch = useDispatch();
 
@@ -30,34 +24,8 @@ const Header = () => {
                 <SearchProvider>
                     <Search></Search>
                 </SearchProvider>
-                <HeaderAction></HeaderAction>
+                <HearderAction />
             </div>
-        </div>
-    );
-};
-
-const HeaderAction = () => {
-    const user = useSelector((state: RootState) => state.user);
-    return (
-        <div className="flex justify-end items-center gap-3">
-            {user._id ? (
-                <>
-                    <ButtonCreateNewVideo />
-                    <Notification />
-                    <Avatar
-                        className="m-2"
-                        src={user.avatar}
-                        size={40}
-                    ></Avatar>
-                </>
-            ) : (
-                <>
-                    <button className=" rounded-full hover:bg-gray-100 cursor-pointer w-[40px] h-[40px] flex justify-center items-center transition-all text-slate-800">
-                        <MoreVertOutlinedIcon fontSize="small" />
-                    </button>
-                    <ButtonLogin></ButtonLogin>
-                </>
-            )}
         </div>
     );
 };

@@ -19,9 +19,30 @@ const userSlice = createSlice({
     name: "user",
     initialState: initialState,
     reducers: {
-        getUserFromLocalStorage() {},
+        getUserFromLocalStorage(state) {
+            const storageData = localStorage.getItem("current-user");
+            if (storageData) {
+                const userData = JSON.parse(storageData);
+                state.username = userData.username;
+                state.email = userData.email;
+                state._id = userData._id;
+                state.subscribedUsers = userData.subscribedUsers;
+                state.subscribers = userData.subscribers;
+                state.avatar = userData.avatar;
+            }
+        },
         login(state, action: PayloadAction<IUserLoginDataField>) {},
         register(state, action: PayloadAction<IUserRegisterDataField>) {},
+        logout(state) {
+            state.username = initialState.username;
+            state.email = initialState.email;
+            state._id = initialState._id;
+            state.subscribedUsers = initialState.subscribedUsers;
+            state.subscribers = initialState.subscribers;
+            state.avatar = initialState.avatar;
+            document.cookie = "access_token=";
+            localStorage.clear();
+        },
         fetchUserSuccess(state, action: PayloadAction<User>) {
             const {
                 username,
@@ -53,6 +74,7 @@ export const {
     getUserFromLocalStorage,
     login,
     register,
+    logout,
     fetchUserSuccess,
     fetchUserFailure,
     updateUserSubscribed,

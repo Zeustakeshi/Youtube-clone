@@ -24,7 +24,9 @@ const Avatar: React.FC<IAvatarProps> = ({
             }}
             className={`relative md:w-[${size}px] md:h-[${size}px] !w-[${
                 size * 0.8
-            }px] !h-[${size * 0.8}px] rounded-full skeleton ${className}`}
+            }px] !h-[${
+                size * 0.8
+            }px] rounded-full skeleton ${className} cursor-pointer`}
         >
             <Image to={to} src={src}></Image>
         </div>
