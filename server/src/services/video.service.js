@@ -112,11 +112,11 @@ class VideoService {
         return { videos: videos.flat(2), itemCount, pageCount };
     }
 
-    async getTrendVideo(skip = 0, limit = 20) {
+    async getTrendVideo(skip = 0, limit = 10) {
         const videos = await VideoModel.find()
             .limit(limit)
             .skip(skip)
-            .sort({ views: -1 });
+            .sort({ views: -1, createdAt: -1 });
 
         const itemCount = await VideoModel.countDocuments();
         const pageCount = Math.ceil(itemCount / limit);

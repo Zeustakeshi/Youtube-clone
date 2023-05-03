@@ -60,6 +60,7 @@ const VideoPage = () => {
                     <div className="flex justify-between items-center">
                         <div className="flex justify-start items-center gap-3 text-sm">
                             <Avatar
+                                to={`/channel/${video.author?._id}`}
                                 src={video.author?.avatar}
                                 size={45}
                             ></Avatar>

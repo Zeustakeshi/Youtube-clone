@@ -10,6 +10,7 @@ import LibraryPage from "../pages/LibraryPage";
 import TrendingPage from "../pages/TrendingPage";
 import HistoryPage from "../pages/HistoryPage";
 import ProfilePage from "../pages/ProfilePage";
+import NotfoundPage from "../pages/NotfoundPage";
 
 const Router = createBrowserRouter([
     {
@@ -53,6 +54,10 @@ const Router = createBrowserRouter([
                 element: <AuthPage></AuthPage>,
             },
         ],
+    },
+    {
+        path: "*",
+        element: <NotfoundPage></NotfoundPage>,
     },
 ]);
 

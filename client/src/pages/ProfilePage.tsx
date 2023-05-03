@@ -21,7 +21,7 @@ import { API_URL } from "../utils/const";
 const ProfilePage = () => {
     const dispatch = useDispatch();
     const user = useSelector((state: RootState) => state.user);
-    const [profileUser, setProfileUser] = useState<AuthorType>(user);
+    const [profileUser, setProfileUser] = useState<AuthorType>();
     const { channelID } = useParams();
 
     // Set default menu state
@@ -31,10 +31,10 @@ const ProfilePage = () => {
 
     // Set title
     useEffect(() => {
-        if (profileUser.username) {
+        if (profileUser?.username) {
             document.title = profileUser.username;
         }
-    }, [profileUser.username]);
+    }, [profileUser?.username]);
 
     // Set user profile if !channelID
     useEffect(() => {
@@ -59,15 +59,15 @@ const ProfilePage = () => {
             }
         })();
     }, [channelID]);
-
+    if (!profileUser) return <div>Loading.....</div>;
     return (
         <div className="w-full">
             <ProfileBanner user={profileUser}></ProfileBanner>
             <ProfileTop user={profileUser}></ProfileTop>
             <div className="mt-5">
-                {profileUser._id && (
+                {profileUser?._id && (
                     <VideoList
-                        url={`/video/channel/${profileUser._id}`}
+                        url={`/video/channel/${profileUser?._id}`}
                     ></VideoList>
                 )}
             </div>
