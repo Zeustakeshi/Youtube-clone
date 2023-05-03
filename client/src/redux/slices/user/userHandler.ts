@@ -23,6 +23,8 @@ export function* LoginSaga(
         yield put(fetchUserSuccess(data.user));
     } catch (error: any) {
         yield put(fetchUserFailure(error.message));
+        console.log(error);
+        toast.error(error.response.data);
     }
 }
 
@@ -36,6 +38,7 @@ export function* RegisterSaga(
         yield put(fetchUserSuccess(data.user));
     } catch (error: any) {
         yield put(fetchUserFailure(error.message));
+        toast.error(error.message);
     }
 }
 

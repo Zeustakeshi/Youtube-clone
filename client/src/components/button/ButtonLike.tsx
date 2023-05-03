@@ -4,6 +4,7 @@ import ThumbUpRoundedIcon from "@mui/icons-material/ThumbUpRounded";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
+import { toast } from "react-toastify";
 interface IButtonLikeProps {
     className?: string;
     isShowLikeNumber?: boolean;
@@ -40,8 +41,8 @@ const ButtonLike: React.FC<IButtonLikeProps> = ({
                 setCouterLike((prev) => (prev > 0 ? prev - 1 : 0));
                 setLiked(false);
             }
-        } catch (error) {
-            console.log(error);
+        } catch (error: any) {
+            toast.error(error.message);
         }
     };
 
