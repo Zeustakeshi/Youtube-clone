@@ -8,7 +8,7 @@ import { RootState } from "../../redux/store";
 import SearchInput from "./SearchInput";
 import SearchResult from "./SearchResult";
 
-const Search = () => {
+const SearchMobile = () => {
     const ref = useRef<HTMLDivElement>(null);
     const search = useSearch();
     const navigation = useNavigate();
@@ -23,23 +23,13 @@ const Search = () => {
     return (
         <div
             ref={ref}
-            className={`relative z-40 flex justify-center items-center text-sm h-[42px] 
+            className={`relative w-full z-40 flex justify-center items-center text-sm h-[42px] 
             `}
         >
             <SearchInput />
-            {!isMobile && (
-                <Tooltip title="Tìm kiếm">
-                    <button
-                        onClick={handleClickButtonSearch}
-                        className=" hover:bg-gray-200 rounded-tr-full rounded-br-full border-gray-300 border bg-gray-100 h-[42px] w-[60px] md:flex hidden justify-center items-center "
-                    >
-                        <SearchRoundedIcon fontSize="small" />
-                    </button>
-                </Tooltip>
-            )}
             {search?.showResults && <SearchResult ref={ref} />}
         </div>
     );
 };
 
-export default Search;
+export default SearchMobile;

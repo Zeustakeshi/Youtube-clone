@@ -1,5 +1,5 @@
-import React from "react";
 import MenuRoundedIcon from "@mui/icons-material/MenuRounded";
+import React from "react";
 import { IButtonToggleMenu } from "../../interfaces/button.interface";
 
 const ButtonToggleMenu: React.FC<IButtonToggleMenu> = ({

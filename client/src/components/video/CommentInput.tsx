@@ -76,7 +76,7 @@ const CommentInput: React.FC<ICommentInputProps> = ({
                         <button
                             type="submit"
                             disabled={!comment.trim()}
-                            className="px-4 py-2 text-sm bg-blue-500 text-white rounded-full font-medium disabled:bg-slate-200 disabled:text-gray-400"
+                            className="md:px-4 md:py-2 px-4 py-1 text-sm bg-blue-500 text-white rounded-full font-medium disabled:bg-slate-200 disabled:text-gray-400"
                         >
                             Bình luận
                         </button>

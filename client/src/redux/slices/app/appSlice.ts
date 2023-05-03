@@ -23,9 +23,12 @@ const appSlice = createSlice({
         updateMenuStatus(state, action: PayloadAction<"show" | "hidden">) {
             state.menuStatus = action.payload;
         },
+        setIsMobile(state, action: PayloadAction<boolean>) {
+            state.isMobile = action.payload;
+        },
     },
 });
 
-export const { toggleMenu, updateMenuStatus, updateMenuSize } =
+export const { toggleMenu, updateMenuStatus, updateMenuSize, setIsMobile } =
     appSlice.actions;
 export default appSlice.reducer;

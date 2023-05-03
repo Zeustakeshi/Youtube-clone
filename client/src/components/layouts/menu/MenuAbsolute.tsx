@@ -13,9 +13,9 @@ const MenuAbsolute = () => {
     return (
         <div
             onClick={() => dispatch(toggleMenu())}
-            className="fixed z-50 top-0 left-0 w-screen h-screen bg-black bg-opacity-50"
+            className="fixed z-50 top-0 left-0 w-full h-full bg-black bg-opacity-50"
         >
-            <div className="  bg-white h-screen max-w-max p-3">
+            <div className="  bg-white max-w-max p-3 h-full">
                 <div className="flex items-center">
                     <div className="mx-2">
                         <ButtonToggleMenu

@@ -5,6 +5,8 @@ import { API_URL } from "../../utils/const";
 import VideoItem from "./VideoItem";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { toast } from "react-toastify";
+import { useSelector } from "react-redux";
+import { RootState } from "../../redux/store";
 
 interface IVideoList {
     url: string;
@@ -14,8 +16,6 @@ interface IVideoList {
 const VideoList: React.FC<IVideoList> = ({ url, params }) => {
     const [videos, setVideos] = useState<IVideo[]>([]);
     const firstFetching = useRef<boolean>(true);
-    const prevUrl = useRef<string>(url);
-
     const [page, setPage] = useState({
         itemCount: 0,
         pageCount: 1,
@@ -47,8 +47,8 @@ const VideoList: React.FC<IVideoList> = ({ url, params }) => {
                     itemCount: data.itemCount || 1,
                 };
             });
-        } catch (error) {
-            console.error(error);
+        } catch (error: any) {
+            alert(JSON.stringify(error));
         }
     };
 

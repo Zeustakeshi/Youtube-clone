@@ -18,10 +18,13 @@ interface IProfileBannerProps {
     className?: string;
 }
 
-const ProfileBanner: React.FC<IProfileBannerProps> = ({ user, className }) => {
+const ProfileBanner: React.FC<IProfileBannerProps> = ({
+    user,
+    className = "",
+}) => {
     const [showModal, setShowModal] = useState(false);
     const { channelID } = useParams();
-    const currentUser = useSelector((state: RootState) => state.user);
+    const { user: currentUser, app } = useSelector((state: RootState) => state);
 
     const dispatch = useDispatch();
 
@@ -42,19 +45,22 @@ const ProfileBanner: React.FC<IProfileBannerProps> = ({ user, className }) => {
 
     return (
         <>
-            <div className={`relative skeleton w-full h-[270px] ${className}`}>
+            <div
+                className={`relative skeleton w-full md:h-[270px] h-[150px] ${className}`}
+            >
                 <div className="absolute w-full h-full bg-slate-900 opacity-20"></div>
                 <Image src={user.background}></Image>
-                {(!channelID || channelID === currentUser._id) && (
-                    <button
-                        onClick={() => setShowModal(true)}
-                        className="absolute bottom-5 right-5 w-[50px] h-[50px] bg-gray-100 rounded-full flex justify-center items-center"
-                    >
-                        <Tooltip title="chỉnh sửa">
-                            <ModeEditOutlineOutlinedIcon fontSize="inherit" />
-                        </Tooltip>
-                    </button>
-                )}
+                {(!channelID || channelID === currentUser._id) &&
+                    !app.isMobile && (
+                        <button
+                            onClick={() => setShowModal(true)}
+                            className="absolute bottom-5 right-5 md:w-[50px] md:h-[50px] w-[40px] h-[40px] bg-gray-100 rounded-full flex justify-center items-center"
+                        >
+                            <Tooltip title="chỉnh sửa">
+                                <ModeEditOutlineOutlinedIcon fontSize="inherit" />
+                            </Tooltip>
+                        </button>
+                    )}
             </div>
             <Modal isOpen={showModal} onClose={() => setShowModal(false)}>
                 <div className="bg-white shadow-md rounded-md min-w-[300px] min-h-[200px]">

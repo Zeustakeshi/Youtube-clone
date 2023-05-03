@@ -50,13 +50,13 @@ const VideoItem: React.FC<IVideoItem> = ({ video, type = "normal" }) => {
             className={`${
                 type === "horizontal"
                     ? "flex justify-start items-start w-[70%] gap-4"
-                    : "block  w-[335px] my-4 "
+                    : "block  md:w-[335px] w-full my-4 "
             }  cursor-pointer`}
         >
             <div
                 className={`skeleton ${
                     type === "horizontal" ? "w-[335px]" : "w-full"
-                }  h-[190px] rounded-lg`}
+                }  md:h-[190px] h-[220px] rounded-lg`}
             >
                 {video?.thumbnailURL && (
                     <Image src={video.thumbnailURL}></Image>
@@ -64,17 +64,17 @@ const VideoItem: React.FC<IVideoItem> = ({ video, type = "normal" }) => {
             </div>
             <div>
                 <div className="flex justify-start items-start gap-2 mt-4">
-                    <div className="min-w-[35px]">
+                    <div className="min-w-[40px]">
                         {author?.avatar ? (
-                            <Avatar src={author.avatar} size={35}></Avatar>
+                            <Avatar src={author.avatar} size={40}></Avatar>
                         ) : (
-                            <div className="w-[35px] h-[35px] rounded-full skeleton"></div>
+                            <div className="w-[40px] h-[40px] rounded-full skeleton"></div>
                         )}
                     </div>
 
-                    <div className="flex flex-col items-start justify-center text-sm">
+                    <div className="flex flex-col items-start justify-center md:text-sm">
                         {video?.title ? (
-                            <p className="content-overflow-limitline  font-medium mb-2">
+                            <p className="content-overflow-limitline font-medium mb-2">
                                 {video?.title}
                             </p>
                         ) : (
@@ -82,14 +82,14 @@ const VideoItem: React.FC<IVideoItem> = ({ video, type = "normal" }) => {
                         )}
 
                         {author?.username ? (
-                            <h5 className="text-slate-600">
+                            <h5 className="text-slate-600 text-sm">
                                 {author?.username}
                             </h5>
                         ) : (
                             <div className="w-[100px] h-[10px]  rounded-full skeleton "></div>
                         )}
                         {video?.createdAt ? (
-                            <div className="flex justify-start items-center gap-1 text-slate-600">
+                            <div className="text-sm flex justify-start items-center gap-1 text-slate-600">
                                 <span>{video?.views} lượt xem</span>
                                 <span> • </span>
                                 <span>

@@ -11,7 +11,7 @@ const ButtonCreateNewVideo = () => {
         <>
             <div
                 onClick={() => setShowModal(true)}
-                className="p-2 cursor-pointer"
+                className="md:p-2 cursor-pointer"
             >
                 <Tooltip title="Tạo mới">
                     <VideoCallOutlinedIcon></VideoCallOutlinedIcon>

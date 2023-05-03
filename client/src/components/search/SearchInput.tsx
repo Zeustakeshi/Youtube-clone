@@ -5,6 +5,7 @@ import { useRef, useState } from "react";
 import useDebounce from "../../hooks/useDebounce";
 import { AxiosResponse } from "axios";
 import { useSearch } from "../../context/SearchContext";
+import { useNavigate } from "react-router-dom";
 
 interface ISearchInput {}
 
@@ -13,7 +14,9 @@ const SearchInput: React.FC<ISearchInput> = ({}) => {
     // const [inputFocus, setInputFocus] = useState(false);
     const [showClearButton, setShowClearButton] = useState(false);
 
+    // custom hook
     const search = useSearch();
+    const navigation = useNavigate();
 
     //Ref
     const inputRef = useRef<HTMLInputElement>(null);
@@ -35,10 +38,17 @@ const SearchInput: React.FC<ISearchInput> = ({}) => {
         if (val.trim()) setShowClearButton(true);
         else setShowClearButton(false);
     };
+
+    const handleEnter = () => {
+        if (!search?.searchKeyword.trim()) return;
+        search?.addSuggestionKeywordHistorys(search.searchKeyword);
+        navigation(`/results?q=${encodeURIComponent(search.searchKeyword)}`);
+    };
+
     return (
         <div
-            className={`relative flex flex-1 border border-gray-300 rounded-tl-full rounded-bl-full px-3 py-1 gap-2 transition-all min-w-[540px] h-[42px] 
-            focus-within:border-blue-600 focus-within:shadow-[rgba(204,219,232,0.5)_3px_3px_6px_0px_inset]
+            className={`relative flex flex-1 border border-gray-300 md:rounded-none md:rounded-tl-full md:rounded-bl-full  rounded-full md:px-3 px-2 md:py-1 gap-2 transition-all min-w-[120px] md:min-w-[540px] md:h-[42px] h-[32px] bg-white
+            focus-within:border-blue-600 focus-within:shadow-[rgba(204,219,232,0.5)_3px_3px_6px_0px_inset] md:focus-within:w-[540px]
         `}
         >
             <div className="header-search-input flex order-2 h-full w-full">
@@ -51,6 +61,9 @@ const SearchInput: React.FC<ISearchInput> = ({}) => {
                     // onBlur={() => (isFocusedRef.current = false)}
                     onFocus={() => search?.setShowResults(true)}
                     value={searchValue}
+                    onKeyDown={(e) => {
+                        if (e.key === "Enter") handleEnter();
+                    }}
                 />
             </div>
             {showClearButton && (

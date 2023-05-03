@@ -50,15 +50,15 @@ const VideoPage = () => {
     };
 
     return (
-        <div className="mx-auto flex items-start justify-center w-[1780px]  p-3 py-4 gap-10">
-            <div className="max-w-[1280px] mx-auto">
+        <div className="mx-auto flex md:flex-row flex-col items-start justify-center w-[1780px]  p-3 py-4 gap-10">
+            <div className="md:max-w-[1280px] max-w-screen-sm mx-auto">
                 <Video youtubeID={video.youtubeID} title={video.title}></Video>
                 <div className="my-3">
-                    <h3 className="my-2 text-lg font-semibold">
+                    <h3 className="my-2 md:text-lg font-semibold">
                         {video?.title}
                     </h3>
-                    <div className="flex justify-between items-center">
-                        <div className="flex justify-start items-center gap-3 text-sm">
+                    <div className="flex md:flex-row flex-col justify-between items-center gap-3">
+                        <div className="md:order-none order-2 flex justify-start md:w-auto w-full items-center gap-3 text-sm">
                             <Avatar
                                 to={`/channel/${video.author?._id}`}
                                 src={video.author?.avatar}
@@ -84,7 +84,7 @@ const VideoPage = () => {
                                 className=""
                             ></ButtonSubscribe>
                         </div>
-                        <div className="flex justify-end items-center gap-3 text-xs">
+                        <div className="flex md:w-auto w-full md:justify-end justify-between items-center gap-3 text-xs">
                             <ButtonLike
                                 isLiked={
                                     typeof user._id === "string" &&
@@ -93,13 +93,13 @@ const VideoPage = () => {
                                 likeNumber={video.likes.length}
                                 onLike={handleLikeVideo}
                                 onUnLike={handleUnLikeVideo}
-                                className="flex justify-center items-center gap-2 rounded-full bg-slate-200 px-4 py-2 text-base"
+                                className="flex justify-center items-center md:gap-2 gap-3 rounded-full bg-slate-200 md:px-4 md:py-2 px-4 py-1 md:text-base text-sm"
                             ></ButtonLike>
-                            <button className="flex justify-center items-center gap-2 rounded-full bg-slate-200 px-4 py-2">
+                            <button className="flex justify-center items-center md:gap-2 gap-3 rounded-full bg-slate-200 md:px-4 md:py-2 px-4 py-1 md:text-base text-sm">
                                 <ShareOutlinedIcon fontSize="small" />
                                 <span className="font-medium">Chia sẻ</span>
                             </button>
-                            <button className="flex justify-center items-center gap-2 rounded-full bg-slate-200 px-4 py-2">
+                            <button className="flex justify-center items-center md:gap-2 gap-3 rounded-full bg-slate-200 md:px-4 md:py-2 px-4 py-1 md:text-base text-sm">
                                 <AddToPhotosOutlinedIcon
                                     fontWeight={400}
                                     fontSize="small"

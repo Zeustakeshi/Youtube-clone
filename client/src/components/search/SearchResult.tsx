@@ -41,7 +41,7 @@ const SearchResult: SearchResultType = (
     return (
         <div
             ref={clickRef}
-            className="absolute top-[120%] left-0 w-full py-3 rounded-lg z-50 bg-white shadow-[rgba(50,50,93,0.25)_0px_2px_5px_-1px,rgba(0,0,0,0.3)_0px_1px_3px_-1px]"
+            className="bg-white z-50 absolute top-[120%] left-0 w-full py-3 rounded-lg shadow-[rgba(50,50,93,0.25)_0px_2px_5px_-1px,rgba(0,0,0,0.3)_0px_1px_3px_-1px]"
         >
             {search?.suggestionKeywords.map((item, index) => {
                 return (

@@ -1,16 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { updateMenuStatus } from "../redux/slices/app/appSlice";
+import { toast } from "react-toastify";
 import { login, register } from "../redux/slices/user/userSlice";
 import { RootState } from "../redux/store";
-import { toast } from "react-toastify";
 const AuthPage = () => {
-    const dispatch = useDispatch();
-
-    useEffect(() => {
-        dispatch(updateMenuStatus("show"));
-    }, []);
     return (
         <div className="flex justify-center items-center w-full h-[calc(100vh-80px)]">
             <div className="flex flex-col justify-center items-center gap-2  rounded-md bg-white shadow-xl p-4 py-6 w-[500px] min-h-[500px]">

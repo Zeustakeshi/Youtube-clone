@@ -1,7 +1,12 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Outlet } from "react-router-dom";
-import { ToastContainer } from "react-toastify";
+import { toast, ToastContainer } from "react-toastify";
+import useWindowSize from "../../../hooks/useWindowSize";
+import {
+    setIsMobile,
+    updateMenuStatus,
+} from "../../../redux/slices/app/appSlice";
 import { getUserFromLocalStorage } from "../../../redux/slices/user/userSlice";
 import { RootState } from "../../../redux/store";
 import Header from "../header/Header";
@@ -9,16 +14,22 @@ import Menu from "../menu/Menu";
 import MenuAbsolute from "../menu/MenuAbsolute";
 
 const MainLayout = () => {
-    const menuStatus = useSelector((state: RootState) => state.app.menuStatus);
+    const { menuStatus, isMobile } = useSelector(
+        (state: RootState) => state.app
+    );
+    const windowSize = useWindowSize();
     const dispatch = useDispatch();
     useEffect(() => {
+        const isMobile = windowSize.width < 1200;
         dispatch(getUserFromLocalStorage());
-    }, []);
-
+        dispatch(setIsMobile(isMobile));
+        if (isMobile) dispatch(updateMenuStatus("hidden"));
+        else dispatch(updateMenuStatus("show"));
+    }, [windowSize]);
     return (
-        <div className="px-3">
+        <div className="md:px-3">
             <ToastContainer
-                position="top-right"
+                position={isMobile ? "bottom-right" : "top-right"}
                 autoClose={2000}
                 hideProgressBar={false}
                 newestOnTop={false}

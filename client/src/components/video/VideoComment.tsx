@@ -1,12 +1,15 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 import { IComment } from "../../interfaces/Comment.interface";
+import { RootState } from "../../redux/store";
 import { API_URL } from "../../utils/const";
 import CommentInput from "./CommentInput";
 import CommentItem from "./CommentItem";
 const VideoComment = ({ videoID }: { videoID: string }) => {
     const [comments, setCommnents] = useState<IComment[]>([]);
-
+    const [showAll, setShowAll] = useState(false);
+    const { isMobile } = useSelector((state: RootState) => state.app);
     useEffect(() => {
         (async () => {
             try {
@@ -23,7 +26,7 @@ const VideoComment = ({ videoID }: { videoID: string }) => {
     }, []);
 
     return (
-        <div className="text-sm min-h-[100vh]">
+        <div className="text-sm">
             <div className="my-3">
                 <p>{comments.length} bình luận</p>
             </div>
@@ -33,14 +36,33 @@ const VideoComment = ({ videoID }: { videoID: string }) => {
                     setComments={setCommnents}
                 ></CommentInput>
                 <div className="my-5">
-                    {comments.map((comment: IComment, index) => {
-                        return (
-                            <CommentItem
-                                comment={comment}
-                                key={index}
-                            ></CommentItem>
-                        );
-                    })}
+                    {isMobile && !showAll && comments.length > 2
+                        ? comments
+                              .slice(0, 2)
+                              .map((comment: IComment, index) => {
+                                  return (
+                                      <CommentItem
+                                          comment={comment}
+                                          key={index}
+                                      ></CommentItem>
+                                  );
+                              })
+                        : comments.map((comment: IComment, index) => {
+                              return (
+                                  <CommentItem
+                                      comment={comment}
+                                      key={index}
+                                  ></CommentItem>
+                              );
+                          })}
+                    {isMobile && comments.length > 2 && (
+                        <button
+                            onClick={() => setShowAll((prev) => !prev)}
+                            className="w-full text-center text-blue-500 px-4 py-1"
+                        >
+                            {showAll ? "Ẩn bớt" : "Xem thêm"}
+                        </button>
+                    )}
                 </div>
             </div>
         </div>

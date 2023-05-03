@@ -13,21 +13,14 @@ import ProfileBanner from "../components/layouts/Banner/ProfileBanner";
 import Modal from "../components/modal/Modal";
 import VideoList from "../components/video/VideoList";
 import { AuthorType } from "../interfaces/User.interface";
-import { updateMenuStatus } from "../redux/slices/app/appSlice";
 import { updateUser } from "../redux/slices/user/userSlice";
 import { RootState } from "../redux/store";
 import { API_URL } from "../utils/const";
 
 const ProfilePage = () => {
-    const dispatch = useDispatch();
     const user = useSelector((state: RootState) => state.user);
     const [profileUser, setProfileUser] = useState<AuthorType>();
     const { channelID } = useParams();
-
-    // Set default menu state
-    useEffect(() => {
-        dispatch(updateMenuStatus("show"));
-    }, []);
 
     // Set title
     useEffect(() => {
@@ -82,8 +75,8 @@ interface IProfileTopProps {
 const ProfileTop: React.FC<IProfileTopProps> = ({ user }) => {
     const currentUser = useSelector((state: RootState) => state.user);
     return (
-        <div className="flex justify-between items-center my-5 mx-2">
-            <div className="flex justify-start items-start gap-4">
+        <div className="flex md:flex-row flex-col justify-between items-center my-5 mx-2 gap-3">
+            <div className="flex md:flex-row flex-col justify-start md:items-start items-center md:gap-4 gap-2">
                 <ProfileAvatar user={user}></ProfileAvatar>
                 <div className="flex flex-col justify-start items-start">
                     <ProfileUserName user={user}></ProfileUserName>
@@ -100,7 +93,7 @@ const ProfileTop: React.FC<IProfileTopProps> = ({ user }) => {
                         currentUser.subscribedUsers.includes(user._id)
                     }
                     channelID={user._id}
-                    className="px-5 py-3 text-base"
+                    className="md:px-5 md:py-3 text-base"
                 ></ButtonSubscribe>
             </div>
         </div>
@@ -115,7 +108,7 @@ const ProfileAvatar: React.FC<IProfileAvatarProps> = ({ user }) => {
     const [showModal, setShowModal] = useState(false);
 
     const { channelID } = useParams();
-    const currentUser = useSelector((state: RootState) => state.user);
+    const { user: currentUser, app } = useSelector((state: RootState) => state);
 
     const dispatch = useDispatch();
 
@@ -141,16 +134,17 @@ const ProfileAvatar: React.FC<IProfileAvatarProps> = ({ user }) => {
                     size={128}
                     src={user.avatar}
                 ></Avatar>
-                {(!channelID || channelID === currentUser._id) && (
-                    <button
-                        onClick={() => setShowModal(true)}
-                        className="absolute w-[40px] h-[40px] top-[50%] left-[50%] -translate-x-[50%] -translate-y-[50%] rounded-full bg-gray-100 bg-opacity-80  text-gray-600"
-                    >
-                        <Tooltip title="chỉnh sửa">
-                            <ModeEditOutlineOutlinedIcon fontSize="inherit" />
-                        </Tooltip>
-                    </button>
-                )}
+                {(!channelID || channelID === currentUser._id) &&
+                    !app.isMobile && (
+                        <button
+                            onClick={() => setShowModal(true)}
+                            className="absolute w-[40px] h-[40px] top-[50%] left-[50%] -translate-x-[50%] -translate-y-[50%] rounded-full bg-gray-100 bg-opacity-80  text-gray-600"
+                        >
+                            <Tooltip title="chỉnh sửa">
+                                <ModeEditOutlineOutlinedIcon fontSize="inherit" />
+                            </Tooltip>
+                        </button>
+                    )}
             </div>
             <Modal isOpen={showModal} onClose={() => setShowModal(false)}>
                 <div className="bg-white shadow-md rounded-md min-w-[300px] min-h-[200px]">
@@ -214,7 +208,7 @@ const ProfileUserName: React.FC<IProfileUserNameProps> = ({ user }) => {
     const [showModal, setShowModal] = useState(false);
 
     const { channelID } = useParams();
-    const currentUser = useSelector((state: RootState) => state.user);
+    const { user: currentUser, app } = useSelector((state: RootState) => state);
     const dispatch = useDispatch();
 
     const handleUpdateUserName = async (userName: string) => {
@@ -238,16 +232,17 @@ const ProfileUserName: React.FC<IProfileUserNameProps> = ({ user }) => {
         <>
             <div className="group flex justify-start items-center gap-4">
                 <div className="text-2xl font-medium">{user.username}</div>
-                {(!channelID || currentUser._id === channelID) && (
-                    <button
-                        onClick={() => setShowModal(true)}
-                        className="w-[40px] h-[40px] rounded-full bg-gray-100 bg-opacity-80 text-gray-600"
-                    >
-                        <Tooltip title="chỉnh sửa">
-                            <ModeEditOutlineOutlinedIcon fontSize="inherit" />
-                        </Tooltip>
-                    </button>
-                )}
+                {(!channelID || currentUser._id === channelID) &&
+                    !app.isMobile && (
+                        <button
+                            onClick={() => setShowModal(true)}
+                            className="w-[40px] h-[40px] rounded-full bg-gray-100 bg-opacity-80 text-gray-600"
+                        >
+                            <Tooltip title="chỉnh sửa">
+                                <ModeEditOutlineOutlinedIcon fontSize="inherit" />
+                            </Tooltip>
+                        </button>
+                    )}
             </div>
             <Modal isOpen={showModal} onClose={() => setShowModal(false)}>
                 <div className="bg-white shadow-md rounded-md min-w-[300px] min-h-[200px]">

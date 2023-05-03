@@ -13,7 +13,7 @@ const CommentItem = ({ comment }: { comment: IComment }) => {
     const [author, setAuthor] = useState<AuthorType>();
     const [showAll, setShowAll] = useState(false);
 
-    const user = useSelector((state: RootState) => state.user);
+    const { user, app } = useSelector((state: RootState) => state);
     useEffect(() => {
         (async () => {
             try {
@@ -52,8 +52,8 @@ const CommentItem = ({ comment }: { comment: IComment }) => {
         <div className="group flex justify-start items-start gap-2 my-5 transition-all">
             <Avatar
                 src={author?.avatar}
-                size={40}
-                className="min-w-[40px]"
+                size={app.isMobile ? 30 : 40}
+                className="md:min-w-[40px]"
             ></Avatar>
             <div>
                 <div className="flex justify-start items-center gap-1 text-xs">

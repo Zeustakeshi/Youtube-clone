@@ -1,5 +1,7 @@
 import React from "react";
+import { useSelector } from "react-redux";
 import { IAvatarProps } from "../../interfaces/Avatar.interface";
+import { RootState } from "../../redux/store";
 // import useWindowSize from "../hooks/useWindowSize";
 import Image from "../image/Image";
 
@@ -10,10 +12,10 @@ const Avatar: React.FC<IAvatarProps> = ({
     size = 50,
     onClick = () => {},
 }) => {
-    // const windowSize = useWindowSize();
-    // if (windowSize.width && windowSize.width < 680) {
-    //     size *= 0.8;
-    // }
+    const { isMobile } = useSelector((state: RootState) => state.app);
+    if (isMobile) {
+        size *= 0.9;
+    }
 
     return (
         <div

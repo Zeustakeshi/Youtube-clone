@@ -1,18 +1,16 @@
-import React, { useState } from "react";
+import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
+import { Tooltip } from "@mui/material";
+import React from "react";
 import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import { useMenu } from "../../../context/MenuContext";
 import { IMenuData, IMenuItem } from "../../../interfaces/Menu.interface";
 import { RootState } from "../../../redux/store";
 import Avatar from "../../avatar/Avatar";
 import Menu from "../../menu/Menu";
 import MenuContentWrapper from "../../menu/MenuContentWrapper";
-import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
-import { useNavigate } from "react-router-dom";
-import {
-    AccountMenuData,
-    MenuType,
-} from "./accountMenuLogics/AccountMenuHelper";
 import { handleChangeMenu } from "./accountMenuLogics";
+import { AccountMenuData } from "./accountMenuLogics/AccountMenuHelper";
 
 const HeaderAvatar: React.FC = () => {
     const user = useSelector((state: RootState) => state.user);
@@ -23,11 +21,13 @@ const HeaderAvatar: React.FC = () => {
                 onChange={handleChangeMenu}
                 data={AccountMenuData}
                 label={
-                    <Avatar
-                        className="m-2"
-                        src={user.avatar}
-                        size={40}
-                    ></Avatar>
+                    <Tooltip title="Cài đặt">
+                        <Avatar
+                            className="m-2"
+                            src={user.avatar}
+                            size={40}
+                        ></Avatar>
+                    </Tooltip>
                 }
             >
                 <MenuContentWrapper className="absolute top-[110%] -right-[2px]  bg-white rounded-md shadow-[rgba(0,0,0,0.1)_0px_10px_50px]">
@@ -93,7 +93,7 @@ const MenuItem = ({ item }: { item: IMenuItem }) => {
                 handleClickItem(item);
             }}
         >
-            <div className="flex justify-start items-center gap-4">
+            <div className="flex justify-start items-center gap-4 md:text-base text-sm">
                 <span>{item.icon}</span>
                 <span>{item.title}</span>
             </div>

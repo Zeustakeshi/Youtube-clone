@@ -1,15 +1,18 @@
 import axios from "axios";
 import moment from "moment";
 import React, { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 import { NavLink, useNavigate } from "react-router-dom";
 import { AuthorType } from "../../interfaces/User.interface";
 import { IVideo, IVideoSimilar } from "../../interfaces/Video.interface";
+import { RootState } from "../../redux/store";
 import { API_URL } from "../../utils/const";
 import Image from "../image/Image";
 import VideoItem from "./VideoItem";
 //
 const SimilarVideo = ({ similars }: { similars: IVideoSimilar[] }) => {
     const [videos, setVideos] = useState<IVideo[]>([]);
+    const { isMobile } = useSelector((state: RootState) => state.app);
     useEffect(() => {
         (async () => {
             const videos = await Promise.all(
@@ -31,9 +34,15 @@ const SimilarVideo = ({ similars }: { similars: IVideoSimilar[] }) => {
     if (!videos.length) return <></>;
     return (
         <div className="min-w-[350px]">
-            <h3 className="text-xl font-medium mb-4">Video liên quan</h3>
+            <h3 className="md:text-xl text-lg font-medium mb-4">
+                Video liên quan
+            </h3>
             <div className="flex flex-col justify-start items-start gap-2">
                 {videos.map((item, index) => {
+                    if (isMobile)
+                        return (
+                            <VideoItem key={item._id} video={item}></VideoItem>
+                        );
                     return <RelatedVideoItem key={item._id} video={item} />;
                 })}
             </div>

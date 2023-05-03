@@ -1,5 +1,7 @@
 import React from "react";
+import { useSelector } from "react-redux";
 import { IVideo } from "../../interfaces/Video.interface";
+import { RootState } from "../../redux/store";
 
 interface IVideoProps {
     youtubeID: string;
@@ -7,11 +9,11 @@ interface IVideoProps {
 }
 
 const Video: React.FC<IVideoProps> = ({ youtubeID, title }) => {
+    const { isMobile } = useSelector((state: RootState) => state.app);
     return (
-        <div className="skeleton w-[1280px] h-[720px]">
+        <div className="skeleton md:w-[1280px] w-full aspect-video">
             <iframe
-                width="1280"
-                height="720"
+                className="w-full h-full object-fill"
                 src={`https://www.youtube.com/embed/${youtubeID}`}
                 title={title}
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
