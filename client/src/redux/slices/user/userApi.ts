@@ -1,5 +1,6 @@
 import axios from "axios";
 import {
+    IUpdateUserPayloadAction,
     IUserLoginDataField,
     IUserRegisterDataField,
 } from "../../../interfaces/User.interface";
@@ -30,4 +31,20 @@ export const register = async (payload: IUserRegisterDataField) => {
         withCredentials: true,
     });
     return data;
+};
+
+export const updateUserAPI = async (
+    payload: IUpdateUserPayloadAction
+): Promise<any> => {
+    return await axios({
+        method: "PATCH",
+        url: API_URL + "/user/update",
+        data: {
+            [payload.type]: payload.data,
+        },
+        headers: {
+            Authorization: `Bearer ${document.cookie.split("=")[1]}`,
+        },
+        withCredentials: true,
+    });
 };

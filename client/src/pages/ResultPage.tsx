@@ -19,7 +19,6 @@ const ResultPage = () => {
     }, []);
 
     const fetchVideo = async (query: string) => {
-        console.log("fetch video");
         const res = await axios({
             method: "GET",
             url: API_URL + `/search/video?q=${encodeURIComponent(query)}`,

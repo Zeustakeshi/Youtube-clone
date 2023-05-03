@@ -19,7 +19,7 @@ const Menu: React.FC = ({}) => {
     >([]);
 
     useEffect(() => {
-        if (!user.subscribedUsers.length) return;
+        // if (!user.subscribedUsers.length) return;
         (async () => {
             try {
                 const subscribedUsers = await Promise.all(
@@ -37,7 +37,7 @@ const Menu: React.FC = ({}) => {
                         return {
                             Icon: <Avatar src={item.avatar} size={28} />,
                             label: item.username,
-                            to: "/a",
+                            to: `/channel/${item._id}`,
                         };
                     })
                 );

@@ -21,6 +21,10 @@ const UserSchema = new Schema(
             type: String,
             default: null,
         },
+        background: {
+            type: String,
+            default: null,
+        },
         subscribers: {
             type: Number,
             default: 0,

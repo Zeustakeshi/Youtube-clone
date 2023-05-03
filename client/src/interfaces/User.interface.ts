@@ -6,11 +6,12 @@ export interface User {
     subscribers: number;
     subscribedUsers: string[];
     error?: string | null;
+    background?: string;
 }
 
 export type AuthorType = Pick<
     User,
-    "avatar" | "_id" | "username" | "subscribers"
+    "avatar" | "_id" | "username" | "subscribers" | "background"
 >;
 
 export interface IUserLoginDataField {
@@ -22,4 +23,9 @@ export interface IUserRegisterDataField {
     email: string;
     password: string;
     userName: string;
+}
+
+export interface IUpdateUserPayloadAction {
+    type: "background" | "username" | "avatar" | "subscribedUsers";
+    data: string | string[];
 }

@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { updateMenuStatus } from "../redux/slices/app/appSlice";
 import { login, register } from "../redux/slices/user/userSlice";
 import { RootState } from "../redux/store";
-import { toast, ToastContainer } from "react-toastify";
+import { toast } from "react-toastify";
 const AuthPage = () => {
     const dispatch = useDispatch();
 
@@ -13,7 +13,6 @@ const AuthPage = () => {
     }, []);
     return (
         <div className="flex justify-center items-center w-full h-[calc(100vh-80px)]">
-            <ToastContainer />
             <div className="flex flex-col justify-center items-center gap-2  rounded-md bg-white shadow-xl p-4 py-6 w-[500px] min-h-[500px]">
                 <h3 className="text-2xl font-semibold ">Đăng nhập</h3>
                 <LoginFrom></LoginFrom>

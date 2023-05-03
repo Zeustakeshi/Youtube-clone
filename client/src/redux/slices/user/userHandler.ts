@@ -1,11 +1,17 @@
 import { PayloadAction } from "@reduxjs/toolkit";
+import { toast } from "react-toastify";
 import { call, put } from "redux-saga/effects";
 import {
+    IUpdateUserPayloadAction,
     IUserLoginDataField,
     IUserRegisterDataField,
 } from "../../../interfaces/User.interface";
-import { login, register } from "./useApi";
-import { fetchUserFailure, fetchUserSuccess } from "./userSlice";
+import { login, register, updateUserAPI } from "./userApi";
+import {
+    fetchUserFailure,
+    fetchUserSuccess,
+    updateUserSuccess,
+} from "./userSlice";
 
 export function* LoginSaga(
     action: PayloadAction<IUserLoginDataField>
@@ -43,3 +49,18 @@ export function* getUserFromLocalStorageSaga() {
         yield put(fetchUserFailure("User not found!"));
     }
 }
+
+export function* updateUserSaga(
+    action: PayloadAction<IUpdateUserPayloadAction>
+): Generator {
+    try {
+        yield call(updateUserAPI, action.payload);
+        yield put(updateUserSuccess(action.payload));
+        toast.success("Cập nhật thành công!");
+    } catch (error: any) {
+        toast.error(error.message);
+    }
+}
+
+export function* updateUserNameSaga() {}
+export function* updateAvatar() {}

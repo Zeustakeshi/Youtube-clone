@@ -129,7 +129,9 @@ class VideoService {
             .limit(limit)
             .skip(skip)
             .sort({ createdAt: -1 });
-        return videos;
+        const itemCount = await VideoModel.countDocuments({ userID: userID });
+        const pageCount = Math.ceil(itemCount / limit);
+        return { videos, itemCount, pageCount };
     }
 }
 

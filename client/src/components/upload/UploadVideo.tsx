@@ -3,7 +3,7 @@ import CloseOutlinedIcon from "@mui/icons-material/CloseOutlined";
 import axios from "axios";
 import React, { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { toast, ToastContainer } from "react-toastify";
+import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { API_URL } from "../../utils/const";
 
@@ -53,24 +53,12 @@ const UploadVideo = () => {
         await toast.promise(createNewVideo(), {
             pending: "Đang tạo mới video....",
             success: "Video được đăng tải thành công!",
-            error: "Đã có lỗi xảy ra trong quá trình tải lên, vui lòng thử lại sau.",
+            error: "Đã có lỗi xảy ra trong quá trình tải lên, vui lòng thử lại sau!",
         });
     };
 
     return (
         <div className="p-4 pt-0 max-w-[850px]">
-            <ToastContainer
-                position="top-right"
-                autoClose={2000}
-                hideProgressBar={false}
-                newestOnTop={false}
-                closeOnClick
-                rtl={false}
-                pauseOnFocusLoss
-                draggable
-                pauseOnHover
-                theme="light"
-            />
             <h4 className="mb-4 text-center font-medium text-xl">
                 Tạo video mới
             </h4>

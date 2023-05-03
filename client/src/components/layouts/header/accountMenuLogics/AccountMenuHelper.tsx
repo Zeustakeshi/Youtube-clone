@@ -1,7 +1,7 @@
 import React from "react";
 import { useSelector } from "react-redux";
 import { IMenuData, IMenuItem } from "../../../../interfaces/Menu.interface";
-import { RootState } from "../../../../redux/store";
+import { RootState, store } from "../../../../redux/store";
 import Avatar from "../../../avatar/Avatar";
 import PhotoCameraFrontIcon from "@mui/icons-material/PhotoCameraFront";
 import LogoutOutlinedIcon from "@mui/icons-material/LogoutOutlined";
@@ -44,7 +44,7 @@ export const AccountMenuData: IMenuData = {
         {
             type: MenuType.YOUR_CHANNEL,
             title: "Kênh của bạn",
-            to: "/",
+            to: `/channel`,
             icon: <PhotoCameraFrontIcon fontSize="small" />,
         },
         {

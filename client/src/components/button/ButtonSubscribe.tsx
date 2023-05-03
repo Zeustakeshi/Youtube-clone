@@ -2,7 +2,7 @@ import axios from "axios";
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { updateUserSubscribed } from "../../redux/slices/user/userSlice";
+import { updateUserSuccess } from "../../redux/slices/user/userSlice";
 import { RootState } from "../../redux/store";
 import { API_URL } from "../../utils/const";
 
@@ -40,7 +40,10 @@ const ButtonSubscribe: React.FC<IButtonSubscribe> = ({
                 });
                 setIsSubsctibed(true);
                 dispatch(
-                    updateUserSubscribed([...user.subscribedUsers, channelID])
+                    updateUserSuccess({
+                        type: "subscribedUsers",
+                        data: [...user.subscribedUsers, channelID],
+                    })
                 );
             } else {
                 await axios({
@@ -54,11 +57,12 @@ const ButtonSubscribe: React.FC<IButtonSubscribe> = ({
                 });
                 setIsSubsctibed(false);
                 dispatch(
-                    updateUserSubscribed(
-                        user.subscribedUsers.filter(
+                    updateUserSuccess({
+                        type: "subscribedUsers",
+                        data: user.subscribedUsers.filter(
                             (item) => item !== channelID
-                        )
-                    )
+                        ),
+                    })
                 );
             }
         } catch (error) {

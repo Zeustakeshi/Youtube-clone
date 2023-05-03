@@ -9,6 +9,7 @@ import SubscriptionPage from "../pages/SubscriptionPage";
 import LibraryPage from "../pages/LibraryPage";
 import TrendingPage from "../pages/TrendingPage";
 import HistoryPage from "../pages/HistoryPage";
+import ProfilePage from "../pages/ProfilePage";
 
 const Router = createBrowserRouter([
     {
@@ -42,6 +43,10 @@ const Router = createBrowserRouter([
             {
                 path: "/results",
                 element: <ResultPage></ResultPage>,
+            },
+            {
+                path: "/channel/:channelID?",
+                element: <ProfilePage></ProfilePage>,
             },
             {
                 path: "/auth",

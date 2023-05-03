@@ -1,5 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import {
+    IUpdateUserPayloadAction,
     IUserLoginDataField,
     IUserRegisterDataField,
     User,
@@ -13,6 +14,7 @@ const initialState: User = {
     subscribedUsers: [],
     subscribers: 0,
     error: null,
+    background: "",
 };
 
 const userSlice = createSlice({
@@ -29,6 +31,7 @@ const userSlice = createSlice({
                 state.subscribedUsers = userData.subscribedUsers;
                 state.subscribers = userData.subscribers;
                 state.avatar = userData.avatar;
+                state.background = userData.background;
             }
         },
         login(state, action: PayloadAction<IUserLoginDataField>) {},
@@ -40,7 +43,15 @@ const userSlice = createSlice({
             state.subscribedUsers = initialState.subscribedUsers;
             state.subscribers = initialState.subscribers;
             state.avatar = initialState.avatar;
-            document.cookie = "access_token=";
+            state.background = initialState.background;
+            const cookies = document.cookie.split(";");
+            for (let i = 0; i < cookies.length; i++) {
+                const cookie = cookies[i];
+                const eqPos = cookie.indexOf("=");
+                const name = eqPos > -1 ? cookie.substr(0, eqPos) : cookie;
+                document.cookie =
+                    name + "=;expires=Thu, 01 Jan 1970 00:00:00 GMT";
+            }
             localStorage.clear();
         },
         fetchUserSuccess(state, action: PayloadAction<User>) {
@@ -51,6 +62,7 @@ const userSlice = createSlice({
                 subscribedUsers,
                 subscribers,
                 avatar,
+                background,
             } = action.payload;
 
             state.username = username;
@@ -59,12 +71,27 @@ const userSlice = createSlice({
             state.subscribedUsers = subscribedUsers;
             state.subscribers = subscribers;
             state.avatar = avatar;
+            state.background = background;
         },
         fetchUserFailure(state, action: PayloadAction<string>) {
             state.error = action.payload;
         },
-        updateUserSubscribed(state, action: PayloadAction<string[]>) {
-            state.subscribedUsers = action.payload;
+        updateUser(state, action: PayloadAction<IUpdateUserPayloadAction>) {},
+        updateUserSuccess(
+            state,
+            action: PayloadAction<IUpdateUserPayloadAction>
+        ) {
+            if (
+                typeof action.payload.data !== "string" &&
+                action.payload.type === "subscribedUsers"
+            ) {
+                state[action.payload.type] = action.payload.data;
+            } else if (
+                typeof action.payload.data === "string" &&
+                action.payload.type !== "subscribedUsers"
+            ) {
+                state[action.payload.type] = action.payload.data;
+            }
             localStorage.setItem("current-user", JSON.stringify(state));
         },
     },
@@ -77,6 +104,7 @@ export const {
     logout,
     fetchUserSuccess,
     fetchUserFailure,
-    updateUserSubscribed,
+    updateUser,
+    updateUserSuccess,
 } = userSlice.actions;
 export default userSlice.reducer;

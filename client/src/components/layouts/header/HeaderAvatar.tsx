@@ -93,8 +93,9 @@ const MenuItem = ({ item }: { item: IMenuItem }) => {
                 handleClickItem(item);
             }}
         >
-            <div>
-                {item.icon} {item.title}
+            <div className="flex justify-start items-center gap-4">
+                <span>{item.icon}</span>
+                <span>{item.title}</span>
             </div>
         </div>
     );

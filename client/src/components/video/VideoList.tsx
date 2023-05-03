@@ -4,6 +4,7 @@ import { IVideo, IVideoResponse } from "../../interfaces/Video.interface";
 import { API_URL } from "../../utils/const";
 import VideoItem from "./VideoItem";
 import InfiniteScroll from "react-infinite-scroll-component";
+import { toast } from "react-toastify";
 
 interface IVideoList {
     url: string;
@@ -13,12 +14,15 @@ interface IVideoList {
 const VideoList: React.FC<IVideoList> = ({ url, params }) => {
     const [videos, setVideos] = useState<IVideo[]>([]);
     const firstFetching = useRef<boolean>(true);
+    const prevUrl = useRef<string>(url);
+
     const [page, setPage] = useState({
         itemCount: 0,
         pageCount: 1,
         currentPage: 1,
     });
     const fetchVideos = async () => {
+        toast("fetch");
         try {
             const { data }: { data: IVideoResponse | any } = await axios({
                 method: "GET",
@@ -28,7 +32,7 @@ const VideoList: React.FC<IVideoList> = ({ url, params }) => {
                 },
                 params: {
                     page: page.currentPage,
-                    limit: 10,
+                    limit: 8,
                     ...params,
                 },
                 withCredentials: true,
@@ -48,17 +52,20 @@ const VideoList: React.FC<IVideoList> = ({ url, params }) => {
         }
     };
 
-    // useEffect(() => {
-    //     if (!firstFetching.current) {
-    //     }
-    // }, [params]);
-
     useEffect(() => {
         if (firstFetching.current) {
             fetchVideos();
             firstFetching.current = false;
         }
-    }, []);
+        return () => {
+            setVideos([]);
+            setPage({
+                itemCount: 0,
+                pageCount: 1,
+                currentPage: 1,
+            });
+        };
+    }, [url]);
 
     return (
         <InfiniteScroll
@@ -68,7 +75,7 @@ const VideoList: React.FC<IVideoList> = ({ url, params }) => {
                 fetchVideos();
             }}
             hasMore={page.currentPage <= page.pageCount}
-            loader={new Array(20).fill(0).map((video, index: number) => {
+            loader={new Array(8).fill(0).map((video, index: number) => {
                 return <VideoItem key={index}></VideoItem>;
             })}
         >

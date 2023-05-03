@@ -9,7 +9,7 @@ import SportsEsportsOutlinedIcon from "@mui/icons-material/SportsEsportsOutlined
 import SubscriptionsOutlinedIcon from "@mui/icons-material/SubscriptionsOutlined";
 import VideoLibraryOutlinedIcon from "@mui/icons-material/VideoLibraryOutlined";
 import { ICollapsedMenuItem } from "../../../interfaces/Menu.interface";
-import Avatar from "../../avatar/Avatar";
+
 export const menuItemsMini: ICollapsedMenuItem[] = [
     {
         Icon: <HomeOutlinedIcon fontSize="small" />,

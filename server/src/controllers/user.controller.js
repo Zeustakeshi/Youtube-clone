@@ -63,10 +63,11 @@ export const login = async (req, res) => {
 //Update
 export const update = async (req, res) => {
     const userID = req.userID;
-    const { username, avatar } = req.body;
+    const { username, avatar, background } = req.body;
     const updatedFields = {};
     if (username) updatedFields.username = username;
     if (avatar) updatedFields.avatar = avatar;
+    if (background) updatedFields.background = background;
 
     if (Object.keys(updatedFields).length === 0) {
         return res.status(400).json("Missing data for this action!");

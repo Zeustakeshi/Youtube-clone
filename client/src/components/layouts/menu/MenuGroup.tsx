@@ -22,7 +22,6 @@ const MenuGroup: React.FC<ICollapsedMenuGroup> = ({
     const { menuSize } = useSelector((state: RootState) => state.app);
 
     const handleToggleLoadMore = (e: any) => {
-        console.log(items.length !== menuItems.length);
         e.stopPropagation();
         if (items.length !== menuItems.length) {
             setMenuItems(items);
