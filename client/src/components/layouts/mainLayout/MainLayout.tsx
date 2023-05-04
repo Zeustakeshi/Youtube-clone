@@ -27,7 +27,7 @@ const MainLayout = () => {
         else dispatch(updateMenuStatus("show"));
     }, [windowSize]);
     return (
-        <div className="md:px-3">
+        <div className="md:px-3 w-full">
             <ToastContainer
                 position={isMobile ? "bottom-right" : "top-right"}
                 autoClose={2000}

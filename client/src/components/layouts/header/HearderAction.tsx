@@ -13,14 +13,14 @@ const HearderAction = () => {
         <div className="flex justify-end items-center gap-3 px-2">
             {user._id && document.cookie ? (
                 <>
-                    {!app.isMobile && <ButtonCreateNewVideo />}
                     <Notification />
+                    {!app.isMobile && <ButtonCreateNewVideo />}
                     <HeaderAvatar></HeaderAvatar>
                 </>
             ) : (
                 <>
-                    {!app.isMobile && <ButtonLogin></ButtonLogin>}
                     <Notification />
+                    {<ButtonLogin></ButtonLogin>}
                     {!app.isMobile && (
                         <ButtonSettingHeader></ButtonSettingHeader>
                     )}

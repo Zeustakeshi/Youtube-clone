@@ -22,9 +22,8 @@ export function* LoginSaga(
         document.cookie = `access_token=${data.access_token}`;
         yield put(fetchUserSuccess(data.user));
     } catch (error: any) {
+        toast.error(error.message);
         yield put(fetchUserFailure(error.message));
-        console.log(error);
-        toast.error(error.response.data);
     }
 }
 
@@ -37,8 +36,8 @@ export function* RegisterSaga(
         document.cookie = `access_token=${data.access_token}`;
         yield put(fetchUserSuccess(data.user));
     } catch (error: any) {
-        yield put(fetchUserFailure(error.message));
         toast.error(error.message);
+        yield put(fetchUserFailure(error.message));
     }
 }
 

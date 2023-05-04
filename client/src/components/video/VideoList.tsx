@@ -48,7 +48,7 @@ const VideoList: React.FC<IVideoList> = ({ url, params }) => {
                 };
             });
         } catch (error: any) {
-            alert(JSON.stringify(error));
+            toast.error(error.message);
         }
     };
 
