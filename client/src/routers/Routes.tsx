@@ -11,6 +11,7 @@ import TrendingPage from "../pages/TrendingPage";
 import HistoryPage from "../pages/HistoryPage";
 import ProfilePage from "../pages/ProfilePage";
 import NotfoundPage from "../pages/NotfoundPage";
+import FeedPage from "../pages/FeedPage";
 
 const Router = createBrowserRouter([
     {
@@ -36,6 +37,10 @@ const Router = createBrowserRouter([
             {
                 path: "/history",
                 element: <HistoryPage></HistoryPage>,
+            },
+            {
+                path: "/feed/:tag",
+                element: <FeedPage></FeedPage>,
             },
             {
                 path: "/video/:id",

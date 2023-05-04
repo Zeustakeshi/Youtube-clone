@@ -39,6 +39,7 @@ const SimilarVideo = ({ similars }: { similars: IVideoSimilar[] }) => {
             </h3>
             <div className="flex flex-col justify-start items-start gap-2">
                 {videos.map((item, index) => {
+                    if (!item) return;
                     if (isMobile)
                         return (
                             <VideoItem key={item._id} video={item}></VideoItem>

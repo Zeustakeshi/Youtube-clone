@@ -1,12 +1,12 @@
 import axios from "axios";
 import { useEffect, useRef, useState } from "react";
+import InfiniteScroll from "react-infinite-scroll-component";
+import { useSelector } from "react-redux";
+import { toast } from "react-toastify";
 import { IVideo, IVideoResponse } from "../../interfaces/Video.interface";
+import { RootState } from "../../redux/store";
 import { API_URL } from "../../utils/const";
 import VideoItem from "./VideoItem";
-import InfiniteScroll from "react-infinite-scroll-component";
-import { toast } from "react-toastify";
-import { useSelector } from "react-redux";
-import { RootState } from "../../redux/store";
 
 interface IVideoList {
     url: string;
@@ -15,12 +15,14 @@ interface IVideoList {
 
 const VideoList: React.FC<IVideoList> = ({ url, params }) => {
     const [videos, setVideos] = useState<IVideo[]>([]);
+    const { isMobile } = useSelector((state: RootState) => state.app);
     const firstFetching = useRef<boolean>(true);
     const [page, setPage] = useState({
         itemCount: 0,
         pageCount: 1,
         currentPage: 1,
     });
+
     const fetchVideos = async () => {
         toast("fetch");
         try {
@@ -65,7 +67,7 @@ const VideoList: React.FC<IVideoList> = ({ url, params }) => {
                 currentPage: 1,
             });
         };
-    }, [url]);
+    }, [url, params]);
 
     return (
         <InfiniteScroll
@@ -75,9 +77,11 @@ const VideoList: React.FC<IVideoList> = ({ url, params }) => {
                 fetchVideos();
             }}
             hasMore={page.currentPage <= page.pageCount}
-            loader={new Array(8).fill(0).map((video, index: number) => {
-                return <VideoItem key={index}></VideoItem>;
-            })}
+            loader={new Array(isMobile ? 2 : 8)
+                .fill(0)
+                .map((video, index: number) => {
+                    return <VideoItem key={index}></VideoItem>;
+                })}
         >
             {videos.map((video, index) => {
                 return <VideoItem key={index} video={video}></VideoItem>;
