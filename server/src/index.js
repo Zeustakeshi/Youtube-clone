@@ -15,7 +15,7 @@ connectDB();
 
 // middleware
 app.use(cookieParser());
-// app.use(helmet());
+app.use(helmet());
 app.use(cors({ credentials: true, origin: process.env.ORIGIN_URL }));
 // app.use(cors());
 app.use(express.json());
